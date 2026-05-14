@@ -1,59 +1,70 @@
-# Portfolio
+# Enrique Enciso — Portfolio
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.11.
+Personal portfolio built with Angular 21 (SSR), Angular Material v21, and Tailwind CSS v4.
 
-## Development server
+**Live:** _coming soon (Vercel)_
+**Repo:** https://github.com/enriqueenciso/online-portfolio
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## Prerequisites
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+| Tool | Version | Notes |
+|---|---|---|
+| Node.js | ≥ 20 | Use [nvm](https://github.com/nvm-sh/nvm) or [fnm](https://github.com/Schniz/fnm) |
+| pnpm | 10.12.2 | See install instructions below |
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Installing pnpm
 
 ```bash
-ng generate --help
+# Option A — standalone installer (recommended)
+curl -fsSL https://get.pnpm.io/install.sh | sh
+
+# Option B — corepack (ships with Node.js 16.13+)
+corepack enable
+corepack prepare pnpm@10.12.2 --activate
 ```
 
-## Building
+> **Important:** This project enforces pnpm via the `packageManager` field in `package.json`.
+> Running `npm install` or `yarn` will be blocked. Always use `pnpm`.
 
-To build the project run:
+---
+
+## Getting started
 
 ```bash
-ng build
+# 1. Install dependencies
+pnpm install
+
+# 2. Start the dev server
+pnpm start          # → http://localhost:4200
+
+# 3. Production build (SSR)
+pnpm build
+
+# 4. Run unit tests
+pnpm test
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Code generation
 
 ```bash
-ng test
+# New standalone component
+pnpm ng generate component src/app/shared/components/<name>
+
+# New page (lazy-loaded route)
+pnpm ng generate component src/app/pages/<name>
 ```
 
-## Running end-to-end tests
+## Stack
 
-For end-to-end (e2e) testing, run:
+| Concern | Choice |
+|---|---|
+| Framework | Angular 21 (standalone, SSR via Express) |
+| UI components | Angular Material v21 (Material Design 3) |
+| Styling | Tailwind CSS v4 (utilities) + SCSS (Material theming) |
+| Theming | Light/dark toggle, respects system preference, persists in `localStorage` |
+| Hosting | Vercel (planned) |
+| Package manager | pnpm 10 |
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+See [CLAUDE.md](./CLAUDE.md) for full architecture notes and conventions.

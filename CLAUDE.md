@@ -51,11 +51,17 @@ src/
 - #5 NestJS API scaffold (contact form, token API)
 - #6 SEO: meta tags, Open Graph, structured data
 
+## Package manager
+
+This project uses **pnpm 10.12.2**. The `packageManager` field in `package.json` blocks npm and yarn.
+Install pnpm: `corepack enable && corepack prepare pnpm@10.12.2 --activate` or via the standalone installer.
+
 ## Commands
 
 ```bash
-npm start          # Dev server (http://localhost:4200)
-npm run build      # Production SSR build
-npm test           # Unit tests
-npx ng generate component src/app/shared/components/<name> --standalone
+pnpm install       # Install dependencies
+pnpm start         # Dev server (http://localhost:4200)
+pnpm build         # Production SSR build
+pnpm test          # Unit tests
+pnpm ng generate component src/app/shared/components/<name>
 ```

@@ -10,7 +10,10 @@
     "serve:ssr:portfolio": "node dist/portfolio/server/server.mjs"
   },
   "private": true,
-  "packageManager": "npm@11.9.0",
+  "packageManager": "pnpm@10.12.2",
+  "pnpm": {
+    "onlyBuiltDependencies": ["@parcel/watcher", "esbuild", "lmdb", "msgpackr-extract"]
+  },
   "dependencies": {
     "@angular/animations": "^21.2.13",
     "@angular/cdk": "^21.2.11",
