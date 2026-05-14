@@ -1,0 +1,21 @@
+<mat-toolbar class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6">
+  <a routerLink="/" class="text-lg font-semibold no-underline" style="color: var(--mat-sys-on-surface)">
+    Enrique Enciso
+  </a>
+
+  <nav class="flex items-center gap-2">
+    <a mat-button routerLink="/" routerLinkActive="opacity-100" [routerLinkActiveOptions]="{ exact: true }">
+      Home
+    </a>
+    <a mat-button routerLink="/resume">Resume</a>
+
+    <button
+      mat-icon-button
+      [matTooltip]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+      (click)="theme.toggle()"
+      aria-label="Toggle theme"
+    >
+      <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+  </nav>
+</mat-toolbar>

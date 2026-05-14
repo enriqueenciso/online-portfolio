@@ -1,0 +1,18 @@
+:host {
+  display: block;
+}
+
+mat-toolbar {
+  background-color: var(--mat-sys-surface-container);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+a[mat-button] {
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+
+  &:hover,
+  &.opacity-100 {
+    opacity: 1;
+  }
+}

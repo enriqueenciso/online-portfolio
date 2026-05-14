@@ -1,0 +1,45 @@
+@use '@angular/material' as mat;
+
+// Configure Tailwind dark mode to use the .dark class on <body>
+// (Tailwind utilities are loaded separately via src/tailwind.css)
+
+html {
+  height: 100%;
+
+  // Light theme (default)
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+
+  // Dark theme — applied when body has .dark class
+  body.dark & {
+    @include mat.theme((
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+        theme-type: dark,
+      ),
+      typography: Roboto,
+      density: 0,
+    ));
+  }
+}
+
+body {
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+  height: 100%;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &.dark {
+    color-scheme: dark;
+  }
+}
