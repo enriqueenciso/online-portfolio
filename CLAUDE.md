@@ -1,18 +1,19 @@
 # Portfolio — Claude Code Context
 
 ## Project overview
+
 Personal portfolio for Enrique Enciso (enriqueenciso@gmail.com), a Software Engineer.
 Hosted on Vercel. Repo: https://github.com/enriqueenciso/online-portfolio
 
 ## Stack decisions
 
-| Concern | Choice | Reason |
-|---|---|---|
-| Frontend | Angular 21 + SSR | User preference, SSR for SEO/performance |
-| Styling | Tailwind CSS v4 + Angular Material v21 | Utility-first layout + Material Design 3 components |
-| Theming | Light/dark toggle via `.dark` class on `<body>` | Respects system preference, persists in localStorage |
-| Hosting | Vercel (planned) | Free tier, zero cold starts for SSR |
-| Backend | None yet — NestJS planned | Will slot in as `apps/api` when contact form / token-gated resume need server-side logic |
+| Concern  | Choice                                          | Reason                                                                                   |
+| -------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Frontend | Angular 21 + SSR                                | User preference, SSR for SEO/performance                                                 |
+| Styling  | Tailwind CSS v4 + Angular Material v21          | Utility-first layout + Material Design 3 components                                      |
+| Theming  | Light/dark toggle via `.dark` class on `<body>` | Respects system preference, persists in localStorage                                     |
+| Hosting  | Vercel (planned)                                | Free tier, zero cold starts for SSR                                                      |
+| Backend  | None yet — NestJS planned                       | Will slot in as `apps/api` when contact form / token-gated resume need server-side logic |
 
 ## Architecture
 
@@ -40,16 +41,44 @@ src/
 - **No `@angular/animations` module import needed.** Using `provideAnimationsAsync()` in `app.config.ts`.
 
 ## Resume gating strategy
+
 - **Public `/resume`** — limited preview, contact info hidden, "request full version" prompt.
 - **Full `/resume?token=<uuid>`** — complete resume, shown only when a valid token is present in the URL. Token validation is client-side for now (sufficient to deter scrapers); move to NestJS API when stricter enforcement is needed.
 
 ## Planned features (tracked as GitHub issues)
+
 - #1 Full resume view with URL token gating
 - #2 Contact section / form
 - #3 Projects showcase section
 - #4 Vercel deployment + CI via GitHub Actions
 - #5 NestJS API scaffold (contact form, token API)
 - #6 SEO: meta tags, Open Graph, structured data
+
+## Pre-commit hooks
+
+Every commit is gated by a Husky pre-commit hook (`.husky/pre-commit`) that runs two steps in order:
+
+1. **lint-staged** — runs only on staged files to keep commits fast:
+   - `.ts` / `.html` → `eslint --fix` then `prettier --write`
+   - `.scss` / `.css` / `.json` / `.md` → `prettier --write`
+2. **test suite** — runs `pnpm run test:ci` (`ng test --watch=false`); all tests must pass.
+
+If either step fails the commit is aborted. Fix the reported errors and re-stage before retrying.
+
+Other developers get the hooks automatically on `pnpm install` via the `prepare: "husky"` script.
+
+### ESLint rules (beyond Angular defaults)
+
+- `@angular-eslint/prefer-signals: warn` — nudges toward signals-first state
+- `@typescript-eslint/no-explicit-any: warn`
+- `@typescript-eslint/consistent-type-imports: error` — enforces `import type` for type-only imports
+- `no-console: warn` (allow `console.warn` / `console.error`); disabled in `server.ts` and config files
+- `eqeqeq: error` — no `==`
+
+### Test setup
+
+- Setup file: `src/test-setup.ts` — mocks `window.matchMedia` for jsdom (Vitest doesn't implement it)
+- Included in `tsconfig.spec.json`
 
 ## Package manager
 

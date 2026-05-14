@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "▶ [1/2] Linting and formatting staged files..."
+pnpm exec lint-staged
+if [ $? -ne 0 ]; then
+  echo "✖ lint-staged failed. Fix the errors above before committing."
+  exit 1
+fi
+
+echo "▶ [2/2] Running test suite..."
+pnpm run test:ci
+if [ $? -ne 0 ]; then
+  echo "✖ Tests failed. All tests must pass before committing."
+  exit 1
+fi
+
+echo "✔ All checks passed."
