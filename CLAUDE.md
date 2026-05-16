@@ -94,3 +94,9 @@ pnpm build         # Production SSR build
 pnpm test          # Unit tests
 pnpm ng generate component src/app/shared/components/<name>
 ```
+
+## Agent skills
+
+This project includes agent skills under `.agents/skills/`. Claude may invoke them automatically based on prompt context — no explicit command needed. Available skills:
+
+`caveman` · `diagnose` · `grill-me` · `grill-with-docs` · `handoff` · `improve-codebase-architecture` · `prototype` · `tdd` · `to-issues` · `to-prd` · `triage` · `write-a-skill` · `zoom-out`
