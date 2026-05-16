@@ -75,7 +75,7 @@ See [CLAUDE.md](./CLAUDE.md) for full architecture notes and conventions.
 
 The `ralph/` AFK agent scripts use Bash and Docker and must run from a WSL2 terminal. This is a one-time machine setup.
 
-### 1. Enable WSL2
+### 1. Enable WSL2 + install Ubuntu
 
 Open PowerShell as Administrator:
 
@@ -83,7 +83,13 @@ Open PowerShell as Administrator:
 wsl --install
 ```
 
-Reboot when prompted. On first launch, create a Unix username and password.
+If WSL2 is already enabled (e.g. Docker Desktop activated it), skip the above and just install the Ubuntu distro:
+
+```powershell
+wsl --install -d Ubuntu
+```
+
+Reboot when prompted (first-time WSL install only). On first launch, create a Unix username and password.
 
 ### 2. Docker Desktop
 
@@ -112,10 +118,14 @@ npm install -g @anthropic-ai/claude-code
 claude --version
 ```
 
-Set your API key permanently:
+**Authenticate Claude Code** — use whichever applies:
 
 ```bash
-echo 'export ANTHROPIC_API_KEY=sk-...' >> ~/.bashrc
+# Claude Pro/Max subscription (no API key needed)
+claude auth login
+
+# OR — Anthropic API key (pay-as-you-go via console.anthropic.com)
+echo 'export ANTHROPIC_API_KEY=sk-ant-...' >> ~/.bashrc
 source ~/.bashrc
 ```
 
