@@ -57,7 +57,7 @@ Both sections live on `/`. There is no `/resume` route. All visitors see the ful
 
 Owned by `HomeComponent`. As the user scrolls, `HomeComponent` computes `exitProgress (0 → 1)` via `@HostListener('window:scroll')` and applies it to the hero container:
 
-- **Desktop:** `transform: translateY(-exitProgress * N%)` + `opacity: 1 - exitProgress`. Hero lags behind scroll, creating a parallax feel.
+- **Desktop:** `transform: translateY(${-60 * exitProgress}px) scale(${1 - 0.05 * exitProgress})` + `opacity: max(0, 1 - (exitProgress - 0.3) / 0.7)` — "Float Away": -60 px lift, scale to 0.95, fade delayed until 30 % scroll. Hero lags behind scroll, creating a parallax feel.
 - **Mobile (`DevicePerformanceService.isLowPerf`):** `opacity` only — no `transform`. Smooth, no scroll math fighting the browser.
 
 No `ScrollTransitionService` or wrapper component. `HomeComponent` guards browser API access with `isPlatformBrowser`.
@@ -206,4 +206,4 @@ Prior art: see `src/test-setup.ts` for the `matchMedia` mock pattern to follow f
 - Profile photo is available and will be added to `src/assets/` before `ResumeSectionComponent` is implemented.
 - Custom SVGs for Claude and Cursor are required before `TechStackConfig` can be finalized. These should be created and added to `src/assets/icons/` as a prerequisite task.
 - The reference portfolio at https://virgenherrera.github.io/virgenherrera/ is used as content structure reference only — not a visual target.
-- Two prototype questions remain open and should be resolved before full implementation: (1) exact push/scatter visual for the star field, (2) specific parallax easing feel on desktop scroll. A `/prototype` dev-only route will host these comparisons and is deleted once decisions are locked.
+- Both prototype questions resolved (see issue #18): parallax uses "Float Away" (-60 px, delayed fade, scale 0.95); star push physics randomly interpolates between Gentle Wake (80 px, 1.0 force) and Hard Scatter (160 px, 2.8 force) on a 5–12 s timer. Stars use a varied colour palette and size distribution. `/prototype` route deleted.

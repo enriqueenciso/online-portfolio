@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Three diagonal rounded stripes — Anthropic brand motif, monochromatic -->
+  <g transform="rotate(-30 64 64)" fill="currentColor">
+    <rect x="24" y="40" width="80" height="13" rx="6.5"/>
+    <rect x="24" y="57.5" width="80" height="13" rx="6.5"/>
+    <rect x="24" y="75" width="80" height="13" rx="6.5"/>
+  </g>
+</svg>
