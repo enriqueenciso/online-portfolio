@@ -35,7 +35,9 @@ const STAR_RGBS = [
   selector: 'app-star-field',
   standalone: true,
   template: `<canvas #canvas style="display:block;width:100%;height:100%"></canvas>`,
-  styles: [':host{position:absolute;inset:0;display:block;pointer-events:none;z-index:0}'],
+  styles: [
+    ':host{position:absolute;inset:0;display:block;pointer-events:none;z-index:0;background:#070714}',
+  ],
 })
 export class StarFieldComponent implements OnDestroy {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
