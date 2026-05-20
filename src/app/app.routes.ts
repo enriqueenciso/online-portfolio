@@ -10,10 +10,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/resume/resume').then((m) => m.ResumeComponent),
   },
   {
-    path: 'prototype',
-    loadComponent: () => import('./pages/prototype/prototype').then((m) => m.PrototypeComponent),
-  },
-  {
     path: '**',
     redirectTo: '',
   },
