@@ -139,6 +139,7 @@ export class StarFieldComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    if (!isPlatformBrowser(this.platform)) return;
     cancelAnimationFrame(this.rafId);
     if (this.onMouseMove) window.removeEventListener('mousemove', this.onMouseMove);
     if (this.onResize) window.removeEventListener('resize', this.onResize);
