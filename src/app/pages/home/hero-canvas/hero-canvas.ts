@@ -1,7 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
 import type { ElementRef, OnDestroy } from '@angular/core';
-import { Component, PLATFORM_ID, ViewChild, afterNextRender, inject } from '@angular/core';
-import { DevicePerformanceService } from '../../core/services/device-performance.service';
+import { Component, PLATFORM_ID, ViewChild, afterNextRender, inject, input } from '@angular/core';
+import { DevicePerformanceService } from '../../../core/services/device-performance.service';
+import type { TechIcon } from '../tech-stack.config';
 
 interface Star {
   x: number;
@@ -15,7 +16,7 @@ interface Star {
   rgb: string;
 }
 
-interface Comet {
+interface FlyingLogo {
   ax: number;
   ay: number;
   bx: number;
@@ -24,8 +25,8 @@ interface Comet {
   cy: number;
   t: number;
   speed: number;
-  label: string;
-  color: string;
+  icon: TechIcon;
+  img: HTMLImageElement | null;
   radius: number;
   trail: { x: number; y: number }[];
   px: number;
@@ -59,45 +60,29 @@ const STAR_RGBS = [
   '255,235,195',
 ];
 
-const TECH_ITEMS = [
-  { label: 'NG', color: '#DD0031' },
-  { label: 'TS', color: '#3178C6' },
-  { label: 'JS', color: '#F7DF1E' },
-  { label: 'RE', color: '#61DAFB' },
-  { label: 'ND', color: '#339933' },
-  { label: 'RX', color: '#B7178C' },
-  { label: 'GIT', color: '#F05032' },
-  { label: 'PG', color: '#336791' },
-  { label: 'TW', color: '#06B6D4' },
-  { label: 'PW', color: '#2EAD33' },
-  { label: 'AWS', color: '#FF9900' },
-  { label: 'DK', color: '#2496ED' },
-  { label: 'NX', color: '#E0234E' },
-  { label: 'GQL', color: '#E10098' },
-  { label: 'VT', color: '#FCC72B' },
-];
-
 @Component({
-  selector: 'app-star-field',
+  selector: 'app-hero-canvas',
   standalone: true,
   template: `<canvas #canvas style="display:block;width:100%;height:100%"></canvas>`,
   styles: [
     ':host{position:absolute;inset:0;display:block;pointer-events:none;z-index:0;background:#070714}',
   ],
 })
-export class StarFieldComponent implements OnDestroy {
+export class HeroCanvasComponent implements OnDestroy {
+  readonly icons = input.required<TechIcon[]>();
+
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
-  private platform = inject(PLATFORM_ID);
-  private perf = inject(DevicePerformanceService);
+  private readonly platform = inject(PLATFORM_ID);
+  private readonly perf = inject(DevicePerformanceService);
 
   private stars: Star[] = [];
-  private comets: Comet[] = [];
+  private logos: FlyingLogo[] = [];
   private satellites: Satellite[] = [];
   private bgCanvas: HTMLCanvasElement | null = null;
+  private readonly preloadedImages = new Map<string, HTMLImageElement>();
   private mouse = { x: -9999, y: -9999 };
   private rafId = 0;
   private frame = 0;
-  // Slowly drifts between Gentle Wake (0) and Hard Scatter (1) on a random timer
   private physicsBlend = 0;
   private physicsTarget = 0;
   private blendCount = 0;
@@ -118,15 +103,18 @@ export class StarFieldComponent implements OnDestroy {
     const isLowPerf = this.perf.isLowPerf();
     const isReduced = this.perf.prefersReducedMotion();
 
+    this.startPreload(this.icons());
+
     this.onResize = () => {
       canvas.width = canvas.clientWidth || window.innerWidth;
       canvas.height = canvas.clientHeight || window.innerHeight;
       this.buildBackground(canvas.width, canvas.height);
       this.spawnStars(canvas.width, canvas.height);
       if (!isLowPerf) this.spawnSatellites(canvas.width, canvas.height);
-      // Reduced-motion: re-render the static frame after every resize so the
-      // canvas isn't left blank when a resize clears it (e.g. scrollbar appearing).
-      if (isReduced) this.renderStatic(ctx, canvas);
+      if (isReduced) {
+        this.spawnStaticLogos(canvas.width, canvas.height);
+        this.renderStatic(ctx, canvas);
+      }
     };
     this.onResize();
     window.addEventListener('resize', this.onResize);
@@ -143,16 +131,55 @@ export class StarFieldComponent implements OnDestroy {
     this.animate(ctx, canvas);
   }
 
-  // Single frame for prefers-reduced-motion: content visible, no animation.
+  private startPreload(icons: TechIcon[]) {
+    for (const icon of icons) {
+      if (this.preloadedImages.has(icon.iconUrl)) continue;
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => this.preloadedImages.set(icon.iconUrl, img);
+      img.src = icon.iconUrl;
+    }
+  }
+
   private renderStatic(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
     ctx.fillStyle = '#070714';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    if (this.bgCanvas) ctx.drawImage(this.bgCanvas, 0, 0);
+    if (this.bgCanvas && this.bgCanvas.width > 0 && this.bgCanvas.height > 0) {
+      ctx.drawImage(this.bgCanvas, 0, 0);
+    }
     for (const s of this.stars) {
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${s.rgb},${s.opacity})`;
       ctx.fill();
+    }
+    for (const l of this.logos) {
+      this.drawLogoHead(ctx, l);
+    }
+  }
+
+  private spawnStaticLogos(w: number, h: number) {
+    this.logos = [];
+    const icons = this.icons();
+    if (icons.length === 0) return;
+    for (let i = 0; i < 8; i++) {
+      const icon = icons[Math.floor(Math.random() * icons.length)];
+      this.logos.push({
+        ax: 0,
+        ay: 0,
+        bx: 0,
+        by: 0,
+        cx: 0,
+        cy: 0,
+        t: 1,
+        speed: 0,
+        icon,
+        img: this.preloadedImages.get(icon.iconUrl) ?? null,
+        radius: 14 + Math.random() * 8,
+        trail: [],
+        px: w * (0.08 + Math.random() * 0.84),
+        py: h * (0.08 + Math.random() * 0.84),
+      });
     }
   }
 
@@ -399,7 +426,10 @@ export class StarFieldComponent implements OnDestroy {
     ctx.restore();
   }
 
-  private spawnComet(w: number, h: number) {
+  private spawnLogo(w: number, h: number) {
+    const icons = this.icons();
+    if (icons.length === 0) return;
+
     const startEdge = Math.floor(Math.random() * 4);
     let ax: number, ay: number;
     if (startEdge === 0) {
@@ -444,8 +474,8 @@ export class StarFieldComponent implements OnDestroy {
       dy = by - ay;
     const k = (Math.random() - 0.5) * 0.45;
 
-    const tech = TECH_ITEMS[Math.floor(Math.random() * TECH_ITEMS.length)];
-    this.comets.push({
+    const icon = icons[Math.floor(Math.random() * icons.length)];
+    this.logos.push({
       ax,
       ay,
       bx,
@@ -454,13 +484,48 @@ export class StarFieldComponent implements OnDestroy {
       cy: my + dx * k,
       t: 0,
       speed: 0.0018 + Math.random() * 0.0022,
-      label: tech.label,
-      color: tech.color,
+      icon,
+      img: this.preloadedImages.get(icon.iconUrl) ?? null,
       radius: 14 + Math.random() * 8,
       trail: [],
       px: ax,
       py: ay,
     });
+  }
+
+  private drawLogoHead(ctx: CanvasRenderingContext2D, l: FlyingLogo) {
+    ctx.save();
+
+    // White circle with brand-coloured glow
+    ctx.shadowColor = l.icon.color;
+    ctx.shadowBlur = 18;
+    ctx.beginPath();
+    ctx.arc(l.px, l.py, l.radius, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Clip to circle so square SVG icons stay inside the bubble
+    ctx.beginPath();
+    ctx.arc(l.px, l.py, l.radius, 0, Math.PI * 2);
+    ctx.clip();
+
+    const img = l.img ?? this.preloadedImages.get(l.icon.iconUrl) ?? null;
+    if (img && img.complete && img.naturalWidth > 0) {
+      const s = l.radius * 2;
+      ctx.drawImage(img, l.px - s / 2, l.py - s / 2, s, s);
+    } else {
+      // Fallback: brand-coloured fill with text abbreviation
+      ctx.fillStyle = l.icon.color;
+      ctx.fillRect(l.px - l.radius, l.py - l.radius, l.radius * 2, l.radius * 2);
+      ctx.font = `bold ${Math.round(l.radius * 0.75)}px monospace`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#fff';
+      ctx.fillText(l.icon.label.substring(0, 3), l.px, l.py);
+    }
+
+    ctx.restore();
   }
 
   private animate(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
@@ -470,21 +535,23 @@ export class StarFieldComponent implements OnDestroy {
       const w = canvas.width,
         h = canvas.height;
 
-      // Spawn initial comet quickly, then throttle to max 5 in flight
+      // Spawn initial logo quickly, then throttle to max 5 in flight
       this.frame++;
-      if (this.frame === 10 && this.comets.length === 0) this.spawnComet(w, h);
-      if (this.frame % 100 === 0 && this.comets.length < 5) this.spawnComet(w, h);
+      if (this.frame === 10 && this.logos.length === 0) this.spawnLogo(w, h);
+      if (this.frame % 100 === 0 && this.logos.length < 5) this.spawnLogo(w, h);
 
-      // Phase 1: advance comet positions + build trails
-      this.comets = this.comets.filter((c) => {
-        c.t += c.speed;
-        const t = c.t,
+      // Phase 1: advance logo positions + build trails
+      this.logos = this.logos.filter((l) => {
+        l.t += l.speed;
+        const t = l.t,
           m = 1 - t;
-        c.px = m * m * c.ax + 2 * m * t * c.cx + t * t * c.bx;
-        c.py = m * m * c.ay + 2 * m * t * c.cy + t * t * c.by;
-        c.trail.push({ x: c.px, y: c.py });
-        if (c.trail.length > 35) c.trail.shift();
-        return c.t < 1.1;
+        l.px = m * m * l.ax + 2 * m * t * l.cx + t * t * l.bx;
+        l.py = m * m * l.ay + 2 * m * t * l.cy + t * t * l.by;
+        l.trail.push({ x: l.px, y: l.py });
+        if (l.trail.length > 35) l.trail.shift();
+        // Pick up image if it finished loading since spawn
+        if (!l.img) l.img = this.preloadedImages.get(l.icon.iconUrl) ?? null;
+        return l.t < 1.1;
       });
 
       // Phase 2: satellite drift + beacon tick; respawn when it exits the canvas
@@ -527,10 +594,10 @@ export class StarFieldComponent implements OnDestroy {
             s.vx += nx * force * radial + -ny * force * (1 - radial);
             s.vy += ny * force * radial + nx * force * (1 - radial);
           }
-          // Comet push — pure radial, 1.5× mouse force for a stronger scatter
-          for (const c of this.comets) {
-            const cdx = s.x - c.px,
-              cdy = s.y - c.py;
+          // Logo push — pure radial, 1.5× mouse force for a stronger scatter
+          for (const l of this.logos) {
+            const cdx = s.x - l.px,
+              cdy = s.y - l.py;
             const cd2 = cdx * cdx + cdy * cdy;
             if (cd2 < pushRadiusSq && cd2 > 0) {
               const cd = Math.sqrt(cd2);
@@ -562,37 +629,21 @@ export class StarFieldComponent implements OnDestroy {
 
       for (const s of this.satellites) this.drawSatellite(ctx, s);
 
-      // Comets — tapered glowing trail + label head
+      // Flying logos — tapered glowing trail + icon head
       ctx.lineCap = 'round';
-      for (const c of this.comets) {
-        for (let i = 1; i < c.trail.length; i++) {
-          const pct = i / c.trail.length;
+      for (const l of this.logos) {
+        for (let i = 1; i < l.trail.length; i++) {
+          const pct = i / l.trail.length;
           ctx.beginPath();
-          ctx.moveTo(c.trail[i - 1].x, c.trail[i - 1].y);
-          ctx.lineTo(c.trail[i].x, c.trail[i].y);
-          ctx.strokeStyle = c.color;
+          ctx.moveTo(l.trail[i - 1].x, l.trail[i - 1].y);
+          ctx.lineTo(l.trail[i].x, l.trail[i].y);
+          ctx.strokeStyle = l.icon.color;
           ctx.globalAlpha = pct * 0.55;
-          ctx.lineWidth = Math.max(1, c.radius * 1.8 * pct);
+          ctx.lineWidth = Math.max(1, l.radius * 1.8 * pct);
           ctx.stroke();
         }
         ctx.globalAlpha = 1;
-
-        ctx.shadowColor = c.color;
-        ctx.shadowBlur = 18;
-        ctx.beginPath();
-        ctx.arc(c.px, c.py, c.radius, 0, Math.PI * 2);
-        ctx.fillStyle = c.color;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-
-        ctx.font = `bold ${Math.round(c.radius * 0.75)}px monospace`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle = '#fff';
-        ctx.shadowColor = 'rgba(0,0,0,0.9)';
-        ctx.shadowBlur = 3;
-        ctx.fillText(c.label, c.px, c.py);
-        ctx.shadowBlur = 0;
+        this.drawLogoHead(ctx, l);
       }
 
       this.rafId = requestAnimationFrame(tick);
