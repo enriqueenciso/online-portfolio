@@ -80,6 +80,16 @@ Other developers get the hooks automatically on `pnpm install` via the `prepare:
 - Setup file: `src/test-setup.ts` — mocks `window.matchMedia` for jsdom (Vitest doesn't implement it)
 - Included in `tsconfig.spec.json`
 
+### Test authoring conventions
+
+Every new component must ship with a `<name>.spec.ts` in the same directory. Tests serve as living documentation — they should be readable as a spec, not just a coverage target.
+
+**What to cover:**
+
+- Expected behavior: the happy path and any non-obvious contracts (e.g. "emits X when Y is true").
+- Reasonable corner cases: boundary values, empty/null inputs, SSR vs browser paths, signal combinations.
+- Bug log: when a regression test is added for a specific bug, include a short inline comment naming the commit or issue (e.g. `// regression: scrollbar resize clears canvas — fixed in 25c35b2`). Keep it to one line; the full context belongs in the commit message.
+
 ## Package manager
 
 This project uses **pnpm 10.12.2**. The `packageManager` field in `package.json` blocks npm and yarn.

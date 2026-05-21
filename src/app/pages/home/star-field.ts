@@ -116,6 +116,7 @@ export class StarFieldComponent implements OnDestroy {
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d')!;
     const isLowPerf = this.perf.isLowPerf();
+    const isReduced = this.perf.prefersReducedMotion();
 
     this.onResize = () => {
       canvas.width = canvas.clientWidth || window.innerWidth;
@@ -123,6 +124,9 @@ export class StarFieldComponent implements OnDestroy {
       this.buildBackground(canvas.width, canvas.height);
       this.spawnStars(canvas.width, canvas.height);
       if (!isLowPerf) this.spawnSatellites(canvas.width, canvas.height);
+      // Reduced-motion: re-render the static frame after every resize so the
+      // canvas isn't left blank when a resize clears it (e.g. scrollbar appearing).
+      if (isReduced) this.renderStatic(ctx, canvas);
     };
     this.onResize();
     window.addEventListener('resize', this.onResize);
@@ -134,10 +138,7 @@ export class StarFieldComponent implements OnDestroy {
     };
     window.addEventListener('mousemove', this.onMouseMove);
 
-    if (this.perf.prefersReducedMotion()) {
-      this.renderStatic(ctx, canvas);
-      return;
-    }
+    if (isReduced) return;
 
     this.animate(ctx, canvas);
   }
@@ -548,7 +549,9 @@ export class StarFieldComponent implements OnDestroy {
       // Phase 4: render
       ctx.fillStyle = '#070714';
       ctx.fillRect(0, 0, w, h);
-      if (this.bgCanvas) ctx.drawImage(this.bgCanvas, 0, 0);
+      if (this.bgCanvas && this.bgCanvas.width > 0 && this.bgCanvas.height > 0) {
+        ctx.drawImage(this.bgCanvas, 0, 0);
+      }
 
       for (const s of this.stars) {
         ctx.beginPath();
