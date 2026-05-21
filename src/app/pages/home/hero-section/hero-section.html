@@ -1,0 +1,10 @@
+<section class="relative h-screen overflow-hidden" style="background: #070714">
+  <app-hero-canvas [icons]="icons()" />
+  <div
+    class="relative z-10 flex flex-col items-center justify-center h-full text-center px-6 gap-6"
+  >
+    <h1 class="text-5xl font-bold tracking-tight text-white">{{ name }}</h1>
+    <p class="text-xl text-white/70">{{ title }}</p>
+    <button mat-flat-button class="mt-2" (click)="scrollToAbout()">See my work ↓</button>
+  </div>
+</section>

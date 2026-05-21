@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
-import { HeroCanvasComponent } from './hero-canvas/hero-canvas';
+import { HeroSectionComponent } from './hero-section/hero-section';
 import { TECH_STACK_CONFIG } from './tech-stack.config';
 
 @Component({
   selector: 'app-home',
-  imports: [MatButtonModule, RouterLink, HeroCanvasComponent],
+  imports: [HeroSectionComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
