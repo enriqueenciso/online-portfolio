@@ -9,21 +9,6 @@ export interface TimelineEntry {
   achievements?: string[];
 }
 
-export interface PreviewTimelineEntry {
-  company: string;
-  role: string;
-  dateRange: string;
-  logo?: string;
-  techStack?: string[];
-}
-
-export interface FullTimelineEntry {
-  company: string;
-  role: string;
-  dateRange: string;
-  achievements: string[];
-}
-
 export interface PortfolioConfig {
   hero: {
     name: string;
@@ -35,11 +20,11 @@ export interface PortfolioConfig {
     github: string;
     linkedin: string;
     skills: string[];
-    timeline: PreviewTimelineEntry[];
+    timeline: TimelineEntry[];
   };
   full: {
     email: string;
-    timeline: FullTimelineEntry[];
+    timeline: TimelineEntry[];
   };
 }
 
