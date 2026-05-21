@@ -1,4 +1,7 @@
 :host {
   display: block;
-  position: relative; // canvas backdrop is absolute-positioned — needs a positioned ancestor
+}
+
+.hero-container {
+  will-change: opacity, transform;
 }

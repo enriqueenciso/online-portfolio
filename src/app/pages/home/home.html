@@ -1,1 +1,4 @@
-<app-hero-section [icons]="techStack" />
+<div class="hero-container" [style.opacity]="heroOpacity()" [style.transform]="heroTransform()">
+  <app-hero-section [icons]="techStack" />
+</div>
+<app-resume-section />
