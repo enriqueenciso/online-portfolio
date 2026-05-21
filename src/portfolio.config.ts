@@ -1,5 +1,14 @@
 import { isDevMode } from '@angular/core';
 
+export interface TimelineEntry {
+  company: string;
+  role: string;
+  dateRange: string;
+  logo?: string;
+  techStack?: string[];
+  achievements?: string[];
+}
+
 export interface PreviewTimelineEntry {
   company: string;
   role: string;

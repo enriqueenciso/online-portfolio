@@ -1,0 +1,52 @@
+:host {
+  display: block;
+}
+
+.entry-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.role {
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+}
+
+.company {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.date-range {
+  font-size: 0.875rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.tech-stack {
+  margin-top: 0.75rem;
+}
+
+.achievements {
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+  color: var(--mat-sys-on-surface-variant);
+
+  li {
+    margin-bottom: 0.25rem;
+    line-height: 1.5;
+  }
+}
