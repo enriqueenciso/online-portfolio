@@ -3,16 +3,25 @@
 }
 
 mat-toolbar {
-  background-color: var(--mat-sys-surface-container);
+  background-color: color-mix(in srgb, var(--mat-sys-surface) 80%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--mat-sys-outline-variant);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  &.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 a[mat-button] {
   opacity: 0.7;
   transition: opacity 0.2s ease;
 
-  &:hover,
-  &.opacity-100 {
+  &:hover {
     opacity: 1;
   }
 }

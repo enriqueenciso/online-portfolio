@@ -8,20 +8,22 @@ import { FooterComponent } from './layout/footer/footer';
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `
     <app-header />
-    <main class="pt-16">
+    <main>
       <router-outlet />
     </main>
     <app-footer />
   `,
-  styles: [`
-    :host {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    main {
-      flex: 1;
-    }
-  `],
+  styles: [
+    `
+      :host {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      main {
+        flex: 1;
+      }
+    `,
+  ],
 })
 export class App {}

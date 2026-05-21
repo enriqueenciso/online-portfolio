@@ -1,13 +1,17 @@
-<mat-toolbar class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6">
-  <a routerLink="/" class="text-lg font-semibold no-underline" style="color: var(--mat-sys-on-surface)">
+<mat-toolbar
+  [class.visible]="isVisible()"
+  class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6"
+>
+  <a
+    routerLink="/"
+    class="text-lg font-semibold no-underline"
+    style="color: var(--mat-sys-on-surface)"
+  >
     Enrique Enciso
   </a>
 
   <nav class="flex items-center gap-2">
-    <a mat-button routerLink="/" routerLinkActive="opacity-100" [routerLinkActiveOptions]="{ exact: true }">
-      Home
-    </a>
-    <a mat-button routerLink="/resume">Resume</a>
+    <a mat-button [routerLink]="'/'" [fragment]="'about'">About</a>
 
     <button
       mat-icon-button
