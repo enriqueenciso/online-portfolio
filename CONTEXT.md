@@ -15,7 +15,7 @@ The full-viewport, visually animated landing section that is always the first th
 
 ## Resume section
 
-The content section below the hero. Always reachable by scrolling. Rendered in preview mode or full mode depending on token presence.
+The content section below the hero. Always reachable by scrolling. Single mode — all content visible to all visitors (see ADR-0001). Two-column layout on desktop (sidebar + main column), single column on mobile.
 
 ## ScrollExitBehavior
 
@@ -37,7 +37,7 @@ Behavior by mode:
 
 ## TimelineComponent
 
-A purely presentational shared component that renders a vertical timeline structure. Input: `entries: TimelineEntry[]`. Iterates entries and renders a `TimelineEntryComponent` for each. No knowledge of `PortfolioConfig` or resume context.
+A purely presentational shared component that renders a vertical timeline structure. Input: `entries: TimelineEntry[]`. Iterates entries and renders a `TimelineEntryComponent` for each. Entries with `collapsed: true` are hidden by default behind a "Show N earlier roles" toggle; the toggle only renders when at least one entry has `collapsed: true`. No knowledge of `PortfolioConfig` or resume context.
 
 ## TimelineEntryComponent
 
@@ -45,11 +45,23 @@ A purely presentational shared component that renders a single timeline entry. S
 
 ## TimelineEntry
 
-The typed interface for a single timeline entry. Defined in `src/portfolio.config.ts` alongside `PortfolioConfig`. Fields: `company`, `role`, `dateRange` (required); `logo`, `techStack`, `achievements` (optional).
+The typed interface for a single timeline entry. Defined in `src/portfolio.config.ts` alongside `PortfolioConfig`. Fields: `company`, `role`, `dateRange` (required); `logo`, `techStack`, `achievements`, `summary`, `collapsed` (optional). `collapsed: true` marks roles that are hidden by default in the timeline (e.g. early research positions less central to the engineering narrative).
 
 ## PortfolioConfig
 
-The single source of truth for all personal data (name, photo, location, skills, timeline, contact links). A flat typed constant — no preview/full split. Components decide what to render based on mode, not by reading different config keys.
+The single source of truth for all personal data (name, photo, location, bio, skill categories, timeline, education, certifications, contact links). A flat typed constant — no preview/full split (see ADR-0001). All fields are always accessible; components decide what to render based on their own presentation logic, not by reading different config namespaces.
+
+## ProfileSidebar
+
+The sticky left column of the resume section. Contains the engineer's photo, name, title, bio, and contact links. On desktop: sticky at `top: 64px`, 280 px wide. On mobile: collapses to a compact horizontal strip at the top of the resume section.
+
+## SkillCategory
+
+A named grouping of related skills with two visibility tiers. Tier 1 skills are always visible; Tier 2 skills are hidden behind a per-category expand toggle. Five categories in display order: Frontend, AI & Workflows, Backend & Data, DevOps & Tooling, Testing & QA.
+
+## EducationSection
+
+The section below the timeline. Renders the engineer's formal degree as a single entry and certifications as compact badge cards. Part of the main content column in the resume section.
 
 ## Header
 
