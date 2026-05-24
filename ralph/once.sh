@@ -5,6 +5,7 @@ commits=$(git log -n 5 --format="%H%n%ad%n%B---" --date=short 2>/dev/null || ech
 prompt=$(cat ralph/prompt.md)
 
 contextfile="ralph/.context"
+trap 'rm -f "$contextfile"' EXIT
 
 printf "Previous commits:\n%s\n\nIssues:\n%s\n\n%s\n" "$commits" "$issues" "$prompt" > "$contextfile"
 
