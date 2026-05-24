@@ -1,5 +1,34 @@
 :host {
   display: block;
+  position: relative;
+  padding-left: 1.75rem;
+
+  // Dot on the connector line
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.3125rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--mat-sys-primary);
+  }
+
+  // Vertical line connecting to the next entry (hidden on the last child)
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0.34375rem; // center of the 0.75rem dot
+    top: 1.0625rem; // just below the dot
+    bottom: -2rem; // bridge through the parent gap
+    width: 2px;
+    background: var(--mat-sys-outline-variant);
+  }
+
+  &:last-child::after {
+    display: none;
+  }
 }
 
 .entry-header {
@@ -36,8 +65,11 @@
   color: var(--mat-sys-on-surface-variant);
 }
 
-.tech-stack {
-  margin-top: 0.75rem;
+.summary {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  color: var(--mat-sys-on-surface-variant);
+  line-height: 1.5;
 }
 
 .achievements {
@@ -49,4 +81,8 @@
     margin-bottom: 0.25rem;
     line-height: 1.5;
   }
+}
+
+.tech-stack {
+  margin-top: 0.75rem;
 }

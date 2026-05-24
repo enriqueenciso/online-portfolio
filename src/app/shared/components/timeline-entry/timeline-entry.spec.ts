@@ -80,4 +80,16 @@ describe('TimelineEntryComponent', () => {
     render({ ...baseEntry, achievements: [] });
     expect(fixture.nativeElement.querySelector('.achievements')).toBeNull();
   });
+
+  it('renders summary as a muted paragraph when provided', () => {
+    render({ ...baseEntry, summary: 'Led a team of 5 engineers.' });
+    const summary = fixture.nativeElement.querySelector('.summary') as HTMLElement | null;
+    expect(summary).not.toBeNull();
+    expect(summary!.textContent?.trim()).toBe('Led a team of 5 engineers.');
+  });
+
+  it('renders no summary element when summary is absent', () => {
+    render(baseEntry);
+    expect(fixture.nativeElement.querySelector('.summary')).toBeNull();
+  });
 });

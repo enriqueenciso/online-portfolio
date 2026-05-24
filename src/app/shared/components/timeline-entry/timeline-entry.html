@@ -8,12 +8,8 @@
     <span class="date-range">{{ entry().dateRange }}</span>
   </div>
 </div>
-@if (entry().techStack?.length) {
-  <mat-chip-set class="tech-stack" aria-label="Tech stack">
-    @for (tech of entry().techStack!; track tech) {
-      <mat-chip>{{ tech }}</mat-chip>
-    }
-  </mat-chip-set>
+@if (entry().summary) {
+  <p class="summary">{{ entry().summary }}</p>
 }
 @if (entry().achievements?.length) {
   <ul class="achievements">
@@ -21,4 +17,11 @@
       <li>{{ achievement }}</li>
     }
   </ul>
+}
+@if (entry().techStack?.length) {
+  <mat-chip-set class="tech-stack" aria-label="Tech stack">
+    @for (tech of entry().techStack!; track tech) {
+      <mat-chip>{{ tech }}</mat-chip>
+    }
+  </mat-chip-set>
 }
