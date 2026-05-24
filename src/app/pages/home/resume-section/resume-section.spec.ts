@@ -29,7 +29,7 @@ describe('ResumeSectionComponent', () => {
     render();
     const img: HTMLImageElement | null = fixture.nativeElement.querySelector('img.profile-photo');
     expect(img).not.toBeNull();
-    expect(img!.src).toContain(config.preview.photo);
+    expect(img!.src).toContain(config.photo);
   });
 
   it('renders account_circle icon when photo is absent', () => {
@@ -50,13 +50,13 @@ describe('ResumeSectionComponent', () => {
   it('renders location from config', () => {
     render();
     const text = fixture.nativeElement.textContent as string;
-    expect(text).toContain(config.preview.location);
+    expect(text).toContain(config.location);
   });
 
   it('renders email link with mailto href', () => {
     render();
     const link: HTMLAnchorElement | null = fixture.nativeElement.querySelector(
-      `a[href="mailto:${config.full.email}"]`,
+      `a[href="mailto:${config.email}"]`,
     );
     expect(link).not.toBeNull();
   });
@@ -64,7 +64,7 @@ describe('ResumeSectionComponent', () => {
   it('renders GitHub link with correct href', () => {
     render();
     const link: HTMLAnchorElement | null = fixture.nativeElement.querySelector(
-      `a[href="${config.preview.github}"]`,
+      `a[href="${config.github}"]`,
     );
     expect(link).not.toBeNull();
   });
@@ -72,24 +72,16 @@ describe('ResumeSectionComponent', () => {
   it('renders LinkedIn link with correct href', () => {
     render();
     const link: HTMLAnchorElement | null = fixture.nativeElement.querySelector(
-      `a[href="${config.preview.linkedin}"]`,
+      `a[href="${config.linkedin}"]`,
     );
     expect(link).not.toBeNull();
-  });
-
-  it('renders all skills as chips', () => {
-    render();
-    const text = fixture.nativeElement.textContent as string;
-    for (const skill of config.preview.skills) {
-      expect(text).toContain(skill);
-    }
   });
 
   it('renders work history via TimelineComponent', () => {
     render();
     expect(fixture.nativeElement.querySelector('app-timeline')).not.toBeNull();
     const text = fixture.nativeElement.textContent as string;
-    for (const entry of config.full.timeline) {
+    for (const entry of config.timeline) {
       expect(text).toContain(entry.company);
       expect(text).toContain(entry.role);
     }

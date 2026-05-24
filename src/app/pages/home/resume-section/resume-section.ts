@@ -12,13 +12,13 @@ import { TimelineComponent } from '../../../shared/components/timeline/timeline'
   styleUrl: './resume-section.scss',
 })
 export class ResumeSectionComponent {
-  photo = config.preview.photo;
+  photo = config.photo;
   readonly name = config.hero.name;
   readonly title = config.hero.title;
-  readonly location = config.preview.location;
-  readonly email = config.full.email;
-  readonly github = config.preview.github;
-  readonly linkedin = config.preview.linkedin;
-  readonly skills = config.preview.skills;
-  readonly timeline = config.full.timeline;
+  readonly location = config.location;
+  readonly email = config.email;
+  readonly github = config.github;
+  readonly linkedin = config.linkedin;
+  readonly skills = config.skillCategories.flatMap((c) => [...c.tier1, ...c.tier2]);
+  readonly timeline = config.timeline;
 }

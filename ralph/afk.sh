@@ -12,24 +12,27 @@ stream_text='select(.type == "assistant").message.content[]? | select(.type == "
 # jq filter to extract final result
 final_result='select(.type == "result").result // empty'
 
-for ((i=1; i<=$1; i++)); do
-  tmpfile=$(mktemp)
-  trap "rm -f $tmpfile" EXIT
+promptfile=$(mktemp)
+outfile=$(mktemp)
+trap "rm -f '$promptfile' '$outfile'" EXIT
 
+for ((i=1; i<=$1; i++)); do
   commits=$(git log -n 5 --format="%H%n%ad%n%B---" --date=short 2>/dev/null || echo "No commits found")
   issues=$(gh issue list --state open --json number,title,body,comments)
   prompt=$(cat ralph/prompt.md)
 
-  docker sandbox run claude . -- \
+  printf "Previous commits:\n%s\n\nIssues:\n%s\n\n%s\n" "$commits" "$issues" "$prompt" > "$promptfile"
+
+  docker sandbox run -i claude . -- \
     --verbose \
     --print \
     --output-format stream-json \
-    "Previous commits: $commits $issues $prompt" \
+  < "$promptfile" \
   | grep --line-buffered '^{' \
-  | tee "$tmpfile" \
+  | tee "$outfile" \
   | jq --unbuffered -rj "$stream_text"
 
-  result=$(jq -r "$final_result" "$tmpfile")
+  result=$(jq -r "$final_result" "$outfile")
 
   if [[ "$result" == *"<promise>NO MORE TASKS</promise>"* ]]; then
     echo "Ralph complete after $i iterations."
