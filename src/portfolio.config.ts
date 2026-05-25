@@ -54,10 +54,62 @@ export const config: PortfolioConfig = {
   email: 'enriquejaviere@gmail.com',
   github: 'https://github.com/enriqueenciso',
   linkedin: 'https://linkedin.com/in/enriqueenciso',
-  bio: '',
-  skillCategories: [],
-  education: { institution: '', degree: '', dateRange: '' },
-  certificates: [],
+  bio: 'Full-Stack Engineer with 10+ years building user-facing products across enterprise and start-up environments. Angular & TypeScript specialist who leads teams, owns features end-to-end, and cares deeply about the craft — from architecture to pixel.',
+  skillCategories: [
+    {
+      name: 'Frontend',
+      tier1: ['Angular', 'TypeScript', 'React', 'RxJS/NgRx', 'SCSS'],
+      tier2: [
+        'JavaScript',
+        'HTML5',
+        'Tailwind',
+        'Next.js',
+        'Bootstrap',
+        'PrimeNG',
+        'Angular Material',
+      ],
+    },
+    {
+      name: 'AI & Workflows',
+      tier1: ['Cursor', 'LLMs', 'AI-assisted dev', 'GitHub Copilot'],
+      tier2: [],
+    },
+    {
+      name: 'Backend & Data',
+      tier1: ['Node.js', 'NestJS', 'PostgreSQL', 'Docker', 'Zod'],
+      tier2: [
+        'GraphQL',
+        'MongoDB',
+        'Redis',
+        'MySQL',
+        'SQL Server',
+        'Java',
+        'Spring Boot',
+        'Express.js',
+        'Maven',
+      ],
+    },
+    {
+      name: 'DevOps & Tooling',
+      tier1: ['Git', 'GitHub Actions', 'Azure', 'AWS', 'Vercel'],
+      tier2: ['Jenkins', 'Webpack', 'Vite', 'Figma', 'Jira'],
+    },
+    {
+      name: 'Testing & QA',
+      tier1: ['Playwright', 'Jest', 'Vitest'],
+      tier2: ['Jasmine', 'Karma', 'Selenium', 'Test Automation'],
+    },
+  ],
+  education: {
+    institution: 'Universidad Politécnica de Chiapas',
+    degree: 'Software Engineer',
+    dateRange: '2010 – 2014',
+  },
+  certificates: [
+    { title: 'Build Deepsearch in TypeScript', issuer: 'AIHero.dev', year: 2025 },
+    { title: 'The Complete Agentic AI Engineering Course', issuer: 'Udemy', year: 2025 },
+    { title: 'IBM Agile Advocate', issuer: 'IBM', year: 2018 },
+  ],
   timeline: [
     {
       company: 'Backbase',
