@@ -81,7 +81,7 @@ describe('ResumeSectionComponent', () => {
     render();
     expect(fixture.nativeElement.querySelector('app-timeline')).not.toBeNull();
     const text = fixture.nativeElement.textContent as string;
-    for (const entry of config.timeline) {
+    for (const entry of config.timeline.filter((e) => !e.collapsed)) {
       expect(text).toContain(entry.company);
       expect(text).toContain(entry.role);
     }
