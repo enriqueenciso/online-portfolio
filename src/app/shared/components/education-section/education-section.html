@@ -1,0 +1,19 @@
+<div class="education-entry">
+  <div class="edu-meta">
+    <span class="institution">{{ education().institution }}</span>
+    <span class="degree">{{ education().degree }}</span>
+    <span class="date-range">{{ education().dateRange }}</span>
+  </div>
+</div>
+
+@if (certificates().length) {
+  <div class="certificates">
+    @for (cert of certificates(); track cert.title) {
+      <div class="cert-card">
+        <span class="cert-title">{{ cert.title }}</span>
+        <span class="cert-issuer">{{ cert.issuer }}</span>
+        <span class="cert-year">{{ cert.year }}</span>
+      </div>
+    }
+  </div>
+}
