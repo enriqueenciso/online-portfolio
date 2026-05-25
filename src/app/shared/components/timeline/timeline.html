@@ -1,3 +1,12 @@
-@for (entry of entries(); track entry.company + entry.role) {
+@for (entry of visibleEntries(); track entry.company + entry.role) {
   <app-timeline-entry class="timeline-item" [entry]="entry" />
+}
+@if (collapsedCount() > 0) {
+  <button class="toggle-btn" (click)="showEarlier.set(!showEarlier())">
+    @if (showEarlier()) {
+      Hide earlier roles ↑
+    } @else {
+      Show {{ collapsedCount() }} earlier roles ↓
+    }
+  </button>
 }
