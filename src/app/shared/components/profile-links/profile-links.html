@@ -1,0 +1,36 @@
+<ul class="links">
+  @if (links().email) {
+    <li class="link-item">
+      <a class="link link--email" href="mailto:{{ links().email }}">
+        <span class="link-icon" aria-hidden="true">✉</span>
+        <span class="link-label">{{ links().email }}</span>
+      </a>
+    </li>
+  }
+  @if (links().github) {
+    <li class="link-item">
+      <a
+        class="link link--github"
+        [href]="links().github"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="link-icon" aria-hidden="true">⌥</span>
+        <span class="link-label">GitHub</span>
+      </a>
+    </li>
+  }
+  @if (links().linkedin) {
+    <li class="link-item">
+      <a
+        class="link link--linkedin"
+        [href]="links().linkedin"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="link-icon" aria-hidden="true">&#128188;</span>
+        <span class="link-label">LinkedIn</span>
+      </a>
+    </li>
+  }
+</ul>
