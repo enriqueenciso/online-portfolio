@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    flex-direction: column;
+    position: sticky;
+    top: 64px;
+    width: 280px;
+  }
+}
