@@ -5,12 +5,9 @@ import { config } from '../../../../portfolio.config';
 
 describe('ResumeSectionComponent', () => {
   let fixture: ComponentFixture<ResumeSectionComponent>;
-  let component: ResumeSectionComponent;
 
-  function render(overrides: Partial<ResumeSectionComponent> = {}): void {
+  function render(): void {
     fixture = TestBed.createComponent(ResumeSectionComponent);
-    component = fixture.componentInstance;
-    Object.assign(component, overrides);
     fixture.detectChanges();
   }
 
@@ -25,61 +22,35 @@ describe('ResumeSectionComponent', () => {
     expect(fixture.nativeElement.querySelector('section#about')).not.toBeNull();
   });
 
-  it('renders the profile photo when photo is present', () => {
+  it('renders ProfileSidebarComponent', () => {
     render();
-    const img: HTMLImageElement | null = fixture.nativeElement.querySelector('img.profile-photo');
-    expect(img).not.toBeNull();
-    expect(img!.src).toContain(config.photo);
+    expect(fixture.nativeElement.querySelector('app-profile-sidebar')).not.toBeNull();
   });
 
-  it('renders account_circle icon when photo is absent', () => {
-    render({ photo: undefined });
-    expect(fixture.nativeElement.querySelector('img.profile-photo')).toBeNull();
-    const icon: HTMLElement | null = fixture.nativeElement.querySelector('mat-icon');
-    expect(icon).not.toBeNull();
-    expect(icon!.textContent).toContain('account_circle');
+  it('renders TimelineComponent', () => {
+    render();
+    expect(fixture.nativeElement.querySelector('app-timeline')).not.toBeNull();
   });
 
-  it('renders name and title from config', () => {
+  it('renders EducationSectionComponent', () => {
+    render();
+    expect(fixture.nativeElement.querySelector('app-education-section')).not.toBeNull();
+  });
+
+  it('renders SkillsSectionComponent', () => {
+    render();
+    expect(fixture.nativeElement.querySelector('app-skills-section')).not.toBeNull();
+  });
+
+  it('renders name and title from config via sidebar', () => {
     render();
     const text = fixture.nativeElement.textContent as string;
     expect(text).toContain(config.hero.name);
     expect(text).toContain(config.hero.title);
   });
 
-  it('renders location from config', () => {
+  it('renders visible timeline entries', () => {
     render();
-    const text = fixture.nativeElement.textContent as string;
-    expect(text).toContain(config.location);
-  });
-
-  it('renders email link with mailto href', () => {
-    render();
-    const link: HTMLAnchorElement | null = fixture.nativeElement.querySelector(
-      `a[href="mailto:${config.email}"]`,
-    );
-    expect(link).not.toBeNull();
-  });
-
-  it('renders GitHub link with correct href', () => {
-    render();
-    const link: HTMLAnchorElement | null = fixture.nativeElement.querySelector(
-      `a[href="${config.github}"]`,
-    );
-    expect(link).not.toBeNull();
-  });
-
-  it('renders LinkedIn link with correct href', () => {
-    render();
-    const link: HTMLAnchorElement | null = fixture.nativeElement.querySelector(
-      `a[href="${config.linkedin}"]`,
-    );
-    expect(link).not.toBeNull();
-  });
-
-  it('renders work history via TimelineComponent', () => {
-    render();
-    expect(fixture.nativeElement.querySelector('app-timeline')).not.toBeNull();
     const text = fixture.nativeElement.textContent as string;
     for (const entry of config.timeline.filter((e) => !e.collapsed)) {
       expect(text).toContain(entry.company);

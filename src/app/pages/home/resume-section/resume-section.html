@@ -1,36 +1,11 @@
-<section id="about" class="max-w-3xl mx-auto px-6 py-16">
-  <header class="profile-header">
-    @if (photo) {
-      <img class="profile-photo" [src]="photo" [alt]="name" />
-    } @else {
-      <mat-icon class="profile-icon">account_circle</mat-icon>
-    }
-    <div class="profile-meta">
-      <h2 class="text-3xl font-bold">{{ name }}</h2>
-      <p class="subtitle">{{ title }}</p>
-      <p class="location">{{ location }}</p>
+<section id="about" class="resume-section">
+  <div class="resume-grid">
+    <app-profile-sidebar />
+    <div class="main-col">
+      <h2 class="text-3xl font-bold mb-8">Experience</h2>
+      <app-timeline [entries]="timeline" />
+      <app-education-section [education]="education" [certificates]="certificates" />
+      <app-skills-section [categories]="skillCategories" />
     </div>
-  </header>
-
-  <div class="contact-links">
-    <a [href]="'mailto:' + email">{{ email }}</a>
-    <a [href]="github" target="_blank" rel="noopener">GitHub</a>
-    <a [href]="linkedin" target="_blank" rel="noopener">LinkedIn</a>
   </div>
-
-  <mat-divider />
-
-  <section class="mt-8">
-    <h3 class="text-xl font-semibold mb-4">Skills</h3>
-    <mat-chip-set aria-label="Skills">
-      @for (skill of skills; track skill) {
-        <mat-chip>{{ skill }}</mat-chip>
-      }
-    </mat-chip-set>
-  </section>
-
-  <section class="mt-8">
-    <h3 class="text-xl font-semibold mb-4">Experience</h3>
-    <app-timeline [entries]="timeline" />
-  </section>
 </section>
