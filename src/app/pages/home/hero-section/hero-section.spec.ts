@@ -7,12 +7,20 @@ import { HeroSectionComponent } from './hero-section';
 import type { TechIcon } from '../tech-stack.config';
 import { config } from '../../../../portfolio.config';
 
+vi.mock('gsap', () => ({
+  gsap: { set: vi.fn(), from: vi.fn(), to: vi.fn() },
+}));
+
+vi.mock('typed.js', () => ({
+  default: vi.fn(),
+}));
+
 const TEST_ICONS: TechIcon[] = [{ label: 'TS', color: '#3178C6', iconUrl: 'ts.svg' }];
 
 describe('HeroSectionComponent', () => {
   let fixture: ComponentFixture<HeroSectionComponent>;
 
-  function render(opts: { platform?: string } = {}): void {
+  function render(opts: { platform?: string; reducedMotion?: boolean } = {}): void {
     vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null as any);
 
     TestBed.configureTestingModule({
@@ -21,7 +29,10 @@ describe('HeroSectionComponent', () => {
         { provide: PLATFORM_ID, useValue: opts.platform ?? 'server' },
         {
           provide: DevicePerformanceService,
-          useValue: { isLowPerf: () => false, prefersReducedMotion: () => false },
+          useValue: {
+            isLowPerf: () => false,
+            prefersReducedMotion: () => opts.reducedMotion ?? false,
+          },
         },
       ],
     });
@@ -32,6 +43,7 @@ describe('HeroSectionComponent', () => {
   }
 
   afterEach(() => {
+    vi.clearAllMocks();
     vi.restoreAllMocks();
     TestBed.resetTestingModule();
   });
@@ -63,6 +75,30 @@ describe('HeroSectionComponent', () => {
   it('renders HeroCanvasComponent as background', () => {
     render();
     expect(fixture.nativeElement.querySelector('app-hero-canvas')).not.toBeNull();
+  });
+
+  it('does not trigger GSAP on server platform', async () => {
+    render({ platform: 'server' });
+    const { gsap } = await import('gsap');
+    expect(gsap.set).not.toHaveBeenCalled();
+    expect(gsap.from).not.toHaveBeenCalled();
+  });
+
+  it('does not trigger GSAP when prefers-reduced-motion is set', async () => {
+    render({ platform: 'browser', reducedMotion: true });
+    await fixture.whenStable();
+    const { gsap } = await import('gsap');
+    expect(gsap.set).not.toHaveBeenCalled();
+    expect(gsap.from).not.toHaveBeenCalled();
+  });
+
+  it('runs animations with mocked libraries on browser platform without error', async () => {
+    render({ platform: 'browser', reducedMotion: false });
+    // flush microtasks (dynamic imports) before the next macrotask fires
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    const { gsap } = await import('gsap');
+    expect(gsap.set).toHaveBeenCalled();
+    expect(gsap.from).toHaveBeenCalled();
   });
 
   it('scrolls to #about when CTA is clicked in browser', () => {
