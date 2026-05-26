@@ -1,0 +1,40 @@
+:host {
+  display: block;
+}
+
+.category-name {
+  display: block;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--mat-sys-on-surface-variant);
+  margin-bottom: 0.5rem;
+}
+
+.tier1 {
+  display: block;
+}
+
+.tier2 {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+
+  &.expanded {
+    max-height: 12rem;
+  }
+}
+
+.toggle-btn {
+  display: inline-block;
+  margin-top: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--mat-sys-primary);
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,24 @@
+<span class="category-name">{{ category().name }}</span>
+
+<mat-chip-set class="tier1" [attr.aria-label]="category().name + ' primary skills'">
+  @for (skill of category().tier1; track skill) {
+    <mat-chip>{{ skill }}</mat-chip>
+  }
+</mat-chip-set>
+
+@if (category().tier2.length > 0) {
+  <div class="tier2" [class.expanded]="expanded()">
+    <mat-chip-set [attr.aria-label]="category().name + ' additional skills'">
+      @for (skill of category().tier2; track skill) {
+        <mat-chip>{{ skill }}</mat-chip>
+      }
+    </mat-chip-set>
+  </div>
+  <button class="toggle-btn" type="button" (click)="expanded.set(!expanded())">
+    @if (expanded()) {
+      Show less
+    } @else {
+      + {{ category().tier2.length }} more
+    }
+  </button>
+}
