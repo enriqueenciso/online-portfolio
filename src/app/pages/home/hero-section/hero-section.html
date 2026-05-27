@@ -4,7 +4,9 @@
     class="relative z-10 flex flex-col items-center justify-center h-full text-center px-6 gap-6"
   >
     <h1 #nameEl class="text-5xl font-bold tracking-tight text-white">{{ name }}</h1>
-    <p #titleEl class="text-xl text-white/70">{{ title }}</p>
+    <p class="text-xl text-white/70">
+      <span #titleEl>{{ title }}</span>
+    </p>
     <button #ctaEl mat-flat-button class="mt-2" (click)="scrollToAbout()">See my work ↓</button>
   </div>
 </section>

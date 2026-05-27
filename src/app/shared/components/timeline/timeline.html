@@ -4,9 +4,9 @@
 @if (collapsedCount() > 0) {
   <button class="toggle-btn" (click)="showEarlier.set(!showEarlier())">
     @if (showEarlier()) {
-      Hide earlier roles ↑
+      <span class="toggle-arrow">↑</span> Hide earlier roles
     } @else {
-      Show {{ collapsedCount() }} earlier roles ↓
+      <span class="toggle-arrow">↓</span> Show {{ collapsedCount() }} earlier roles
     }
   </button>
 }
