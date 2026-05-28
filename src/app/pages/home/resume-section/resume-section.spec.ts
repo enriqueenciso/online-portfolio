@@ -42,10 +42,9 @@ describe('ResumeSectionComponent', () => {
     expect(fixture.nativeElement.querySelector('app-skills-section')).not.toBeNull();
   });
 
-  it('renders name and title from config via sidebar', () => {
+  it('renders title from config via sidebar', () => {
     render();
     const text = fixture.nativeElement.textContent as string;
-    expect(text).toContain(config.hero.name);
     expect(text).toContain(config.hero.title);
   });
 

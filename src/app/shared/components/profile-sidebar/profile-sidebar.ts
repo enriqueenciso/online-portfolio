@@ -12,7 +12,6 @@ import { ProfileLinksComponent } from '../profile-links/profile-links';
 })
 export class ProfileSidebarComponent {
   readonly photo = config.photo;
-  readonly name = config.hero.name;
   readonly title = config.hero.title;
   readonly bio = config.bio;
   readonly links = {

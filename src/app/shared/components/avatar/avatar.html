@@ -1,11 +1,8 @@
 <div class="avatar-wrapper">
   @if (photo()) {
-    <img class="photo" [src]="photo()" [alt]="name()" />
+    <img class="photo" [src]="photo()" alt="Profile photo" />
   } @else {
     <span class="fallback-icon" aria-hidden="true">&#128100;</span>
   }
-  <div class="name-overlay">
-    <h2 class="name">{{ name() }}</h2>
-  </div>
 </div>
 <p class="title">{{ title() }}</p>
