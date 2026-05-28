@@ -46,14 +46,14 @@ export interface PortfolioConfig {
 
 export const config: PortfolioConfig = {
   hero: {
-    name: 'Enrique Enciso',
-    title: 'Software Engineer',
+    name: 'Enrique Javier Enciso Rojas',
+    title: 'Senior Software Engineer',
   },
-  photo: 'assets/photo.jpg',
-  location: 'Mexico',
+  photo: 'photo.jpeg',
+  location: 'Jalisco, México',
   email: 'enriquejaviere@gmail.com',
   github: 'https://github.com/enriqueenciso',
-  linkedin: 'https://linkedin.com/in/enriqueenciso',
+  linkedin: 'https://www.linkedin.com/in/enrique-enciso-83769b8b/',
   bio: 'Full-Stack Engineer with 10+ years building user-facing products across enterprise and start-up environments. Angular & TypeScript specialist who leads teams, owns features end-to-end, and cares deeply about the craft — from architecture to pixel.',
   skillCategories: [
     {
@@ -106,6 +106,7 @@ export const config: PortfolioConfig = {
     dateRange: '2010 – 2014',
   },
   certificates: [
+    { title: 'Claude Code for Real Engineers', issuer: 'AIHero.dev', year: 2026 },
     { title: 'Build Deepsearch in TypeScript', issuer: 'AIHero.dev', year: 2025 },
     { title: 'The Complete Agentic AI Engineering Course', issuer: 'Udemy', year: 2025 },
     { title: 'IBM Agile Advocate', issuer: 'IBM', year: 2018 },
@@ -114,7 +115,7 @@ export const config: PortfolioConfig = {
     {
       company: 'Backbase',
       role: 'Senior Software Engineer',
-      dateRange: 'Aug 2025 – Present',
+      dateRange: 'Aug 2025 – May 2026',
       summary:
         'Leading front-end engineers at Backbase LATAM, establishing standards and AI-assisted development workflows.',
       achievements: [
