@@ -53,7 +53,7 @@ The single source of truth for all personal data (name, photo, location, bio, sk
 
 ## ProfileSidebar
 
-The sticky left column of the resume section. Contains the engineer's photo, name, title, bio, and contact links. On desktop: sticky at `top: 64px`, 280 px wide. On mobile: collapses to a compact horizontal strip at the top of the resume section.
+The sticky left column of the resume section. Desktop layout (top to bottom): Name, Photo, Title, Location, Bio (brief, one sentence), Contact Badges, Skills. Mobile layout: Name (full width, row 1), then a two-column row (left: Photo + Title + Location; right: Contact Badges), then a collapsible Skills row. Bio is hidden on mobile. On desktop: sticky with enough top offset to clear the header, 280 px wide.
 
 ## SkillCategory
 
