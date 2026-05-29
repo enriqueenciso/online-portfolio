@@ -1,32 +1,138 @@
 @use '@angular/material' as mat;
 
-// Configure Tailwind dark mode to use the .dark class on <body>
-// (Tailwind utilities are loaded separately via src/tailwind.css)
+// Custom M3 tonal palette seeded from #519CDF (HSL 208°, 69%, 60%).
+// Primary tones: HSL(208°, 69%, N%). Secondary: HSL(208°, 15%, N%).
+// Neutral: HSL(208°, 3%, N%). Neutral-variant: HSL(208°, 8%, N%).
+// Error palette is the standard Material 3 error scale.
+$portfolio-blue-palette: (
+  0: #000000,
+  10: #081b2b,
+  20: #103556,
+  25: #14436c,
+  30: #185081,
+  35: #1c5d97,
+  40: #206bac,
+  50: #2885d7,
+  60: #539edf,
+  70: #7eb6e7,
+  80: #a9ceef,
+  90: #d4e7f7,
+  95: #e9f3fb,
+  98: #f6fafd,
+  99: #fbfdfe,
+  100: #ffffff,
+  secondary: (
+    0: #000000,
+    10: #161a1d,
+    20: #2b333a,
+    25: #364049,
+    30: #414d57,
+    35: #4c5a66,
+    40: #576775,
+    50: #6c818f,
+    60: #8a9aa8,
+    70: #a7b3be,
+    80: #c4cdd3,
+    90: #e2e6e9,
+    95: #f0f2f4,
+    98: #f9fafa,
+    99: #fcfdfd,
+    100: #ffffff,
+  ),
+  neutral: (
+    0: #000000,
+    10: #191a1a,
+    20: #313334,
+    25: #3e4040,
+    30: #4a4c4d,
+    35: #575959,
+    40: #636566,
+    50: #7c8083,
+    60: #96999c,
+    70: #b0b3b5,
+    80: #cacccd,
+    90: #e5e6e6,
+    95: #f2f2f3,
+    98: #fafafa,
+    99: #fcfcfd,
+    100: #ffffff,
+    4: #0a0a0a,
+    6: #0f0f10,
+    12: #1e1e1f,
+    17: #2a2b2c,
+    22: #363838,
+    24: #3b3d3e,
+    87: #dddedf,
+    92: #eaebeb,
+    94: #eff0f0,
+    96: #f4f5f5,
+  ),
+  neutral-variant: (
+    0: #000000,
+    10: #171a1c,
+    20: #2f3337,
+    25: #3b4045,
+    30: #464d53,
+    35: #525a60,
+    40: #5e676e,
+    50: #75808a,
+    60: #919aa1,
+    70: #acb3b9,
+    80: #c8ccd0,
+    90: #e3e6e8,
+    95: #f1f2f3,
+    98: #f9fafa,
+    99: #fcfdfd,
+    100: #ffffff,
+  ),
+  error: (
+    0: #000000,
+    10: #410002,
+    20: #690005,
+    25: #7e0007,
+    30: #93000a,
+    35: #a80710,
+    40: #ba1a1a,
+    50: #de3730,
+    60: #ff5449,
+    70: #ff897d,
+    80: #ffb4ab,
+    90: #ffdad6,
+    95: #ffedea,
+    98: #fff8f7,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+);
 
 html {
   height: 100%;
 
   // Light theme (default)
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
-
-  // Dark theme — applied when body has .dark class
-  body.dark & {
-    @include mat.theme((
+  @include mat.theme(
+    (
       color: (
-        primary: mat.$azure-palette,
+        primary: $portfolio-blue-palette,
         tertiary: mat.$blue-palette,
-        theme-type: dark,
       ),
       typography: Roboto,
       density: 0,
-    ));
+    )
+  );
+
+  // Dark theme — applied when body has .dark class
+  body.dark & {
+    @include mat.theme(
+      (
+        color: (
+          primary: $portfolio-blue-palette,
+          tertiary: mat.$blue-palette,
+          theme-type: dark,
+        ),
+        typography: Roboto,
+        density: 0,
+      )
+    );
   }
 }
 
@@ -37,7 +143,9 @@ body {
   font: var(--mat-sys-body-medium);
   margin: 0;
   height: 100%;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 
   &.dark {
     color-scheme: dark;
