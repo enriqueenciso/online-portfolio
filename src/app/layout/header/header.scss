@@ -7,21 +7,25 @@ mat-toolbar {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--mat-sys-outline-variant);
+  box-shadow: none;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    box-shadow 0.3s ease;
 
   &.visible {
     opacity: 1;
     pointer-events: auto;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--mat-sys-shadow) 15%, transparent);
   }
 }
 
 a[mat-button] {
-  opacity: 0.7;
-  transition: opacity 0.2s ease;
+  --mat-text-button-label-text-color: var(--mat-sys-on-surface-variant);
 
-  &:hover {
-    opacity: 1;
+  &:hover,
+  &.nav-active {
+    --mat-text-button-label-text-color: var(--mat-sys-primary);
   }
 }

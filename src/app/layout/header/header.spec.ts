@@ -1,9 +1,13 @@
+import { Component } from '@angular/core';
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { vi } from 'vitest';
 import { HeaderComponent } from './header';
+
+@Component({ template: '' })
+class StubPageComponent {}
 
 describe('HeaderComponent', () => {
   let fixture: ComponentFixture<HeaderComponent>;
@@ -12,7 +16,10 @@ describe('HeaderComponent', () => {
   function render(opts: { platform?: string } = {}): void {
     TestBed.configureTestingModule({
       imports: [HeaderComponent],
-      providers: [{ provide: PLATFORM_ID, useValue: opts.platform ?? 'server' }, provideRouter([])],
+      providers: [
+        { provide: PLATFORM_ID, useValue: opts.platform ?? 'server' },
+        provideRouter([{ path: '', component: StubPageComponent }]),
+      ],
     });
 
     fixture = TestBed.createComponent(HeaderComponent);
@@ -83,5 +90,16 @@ describe('HeaderComponent', () => {
     const aboutLink = Array.from(links).find((a) => a.textContent?.trim() === 'About');
     expect(aboutLink).toBeDefined();
     expect(aboutLink!.getAttribute('href')).toContain('#about');
+  });
+
+  it('applies nav-active class to About link on root route', async () => {
+    render({ platform: 'browser' });
+    const router = TestBed.inject(Router);
+    await router.navigate(['/']);
+    fixture.detectChanges();
+
+    const links = fixture.nativeElement.querySelectorAll('a') as NodeListOf<HTMLAnchorElement>;
+    const aboutLink = Array.from(links).find((a) => a.textContent?.trim() === 'About');
+    expect(aboutLink?.classList).toContain('nav-active');
   });
 });
