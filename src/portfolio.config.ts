@@ -54,7 +54,7 @@ export const config: PortfolioConfig = {
   email: 'enriquejaviere@gmail.com',
   github: 'https://github.com/enriqueenciso',
   linkedin: 'https://www.linkedin.com/in/enrique-enciso-83769b8b/',
-  bio: 'Full-Stack Engineer with 10+ years building user-facing products across enterprise and start-up environments. Angular & TypeScript specialist who leads teams, owns features end-to-end, and cares deeply about the craft — from architecture to pixel.',
+  bio: 'Angular & TypeScript specialist with 10+ years shipping user-facing products across enterprise and start-up environments.',
   skillCategories: [
     {
       name: 'Frontend',

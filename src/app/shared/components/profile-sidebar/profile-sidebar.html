@@ -1,5 +1,27 @@
 <aside class="sidebar">
-  <app-avatar [photo]="photo" [title]="title" />
-  <app-profile-bio class="hidden md:block" [bio]="bio" />
-  <app-profile-links [links]="links" />
+  <p class="sidebar-name">{{ name }}</p>
+
+  <div class="sidebar-photo-col">
+    <app-avatar [photo]="photo" [title]="title" />
+    <p class="sidebar-location">{{ location }}</p>
+  </div>
+
+  <app-profile-bio class="sidebar-bio" [bio]="bio" />
+
+  <div class="sidebar-badges">
+    <app-profile-links [links]="links" />
+  </div>
+
+  <app-skills-section class="sidebar-skills-desktop" [categories]="skillCategories" />
+
+  <div class="sidebar-skills-mobile">
+    <button mat-stroked-button class="skills-toggle-btn" (click)="toggleSkills()">
+      {{ skillsExpanded() ? 'Hide Skills' : 'Show Skills' }}
+    </button>
+    @if (skillsExpanded()) {
+      <div @expandCollapse class="skills-expand-panel">
+        <app-skills-section [categories]="skillCategories" />
+      </div>
+    }
+  </div>
 </aside>
