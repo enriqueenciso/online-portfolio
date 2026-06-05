@@ -8,11 +8,11 @@ Fix the four low-complexity issues directly: switch contact pills to a wrapping 
 
 ## GitHub Issues
 
-- [TBD] — Contact pills: responsive flex wrap
-- [TBD] — Skills section: inter-group spacing + divider
-- [TBD] — Education & Certifications: section header + top padding
-- [TBD] — Skills Tier 1 content update
-- [TBD] — UI visual rework (prototype)
+- [#53](https://github.com/enriqueenciso/online-portfolio/issues/53) — Contact pills: responsive flex wrap
+- [#54](https://github.com/enriqueenciso/online-portfolio/issues/54) — Skills section: inter-group spacing + divider
+- [#55](https://github.com/enriqueenciso/online-portfolio/issues/55) — Education & Certifications: section header + top padding
+- [#56](https://github.com/enriqueenciso/online-portfolio/issues/56) — Skills Tier 1 content update
+- [#57](https://github.com/enriqueenciso/online-portfolio/issues/57) — UI visual rework (prototype)
 
 ## User Stories
 
