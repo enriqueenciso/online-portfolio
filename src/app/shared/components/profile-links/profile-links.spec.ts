@@ -67,4 +67,23 @@ describe('ProfileLinksComponent', () => {
     const anchors = fixture.nativeElement.querySelectorAll('a') as NodeListOf<HTMLAnchorElement>;
     expect(anchors.length).toBe(0);
   });
+
+  it('.links defaults to flex-direction column (mobile)', () => {
+    render({ email: 'test@example.com' });
+    const styles = Array.from(document.querySelectorAll('style'))
+      .map((s) => s.textContent ?? '')
+      .join('');
+    expect(styles).toMatch(/flex-direction\s*:\s*column/);
+  });
+
+  it('.links switches to flex-direction row with wrap at the 768px breakpoint', () => {
+    render({ email: 'test@example.com' });
+    const styles = Array.from(document.querySelectorAll('style'))
+      .map((s) => s.textContent ?? '')
+      .join('');
+    expect(styles).toMatch(/@media[^{]*min-width[^}]*768px/);
+    expect(styles).toMatch(/flex-direction\s*:\s*row/);
+    expect(styles).toMatch(/flex-wrap\s*:\s*wrap/);
+    expect(styles).toMatch(/justify-content\s*:\s*center/);
+  });
 });

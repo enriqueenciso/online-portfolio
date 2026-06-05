@@ -7,6 +7,14 @@
   gap: 0.5rem;
 }
 
+@media (min-width: 768px) {
+  .links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
