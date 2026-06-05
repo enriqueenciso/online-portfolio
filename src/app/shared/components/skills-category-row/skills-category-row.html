@@ -1,4 +1,4 @@
-<span class="category-name">{{ category().name }}</span>
+<h3 class="category-name">{{ category().name }}</h3>
 
 <mat-chip-set class="tier1" [attr.aria-label]="category().name + ' primary skills'">
   @for (skill of category().tier1; track skill) {
