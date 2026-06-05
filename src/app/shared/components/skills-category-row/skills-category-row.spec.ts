@@ -72,4 +72,13 @@ describe('SkillsCategoryRowComponent', () => {
     render(categoryNoTier2);
     expect(toggleBtn()).toBeNull();
   });
+
+  it('non-first rows receive top padding via :not(:first-child) rule', () => {
+    render(category);
+    const styles = Array.from(document.querySelectorAll('style'))
+      .map((s) => s.textContent ?? '')
+      .join('');
+    expect(styles).toMatch(/:not\(:first-child\)/);
+    expect(styles).toMatch(/padding-top/);
+  });
 });

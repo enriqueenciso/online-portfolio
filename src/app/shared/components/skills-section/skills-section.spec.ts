@@ -36,6 +36,14 @@ describe('SkillsSectionComponent', () => {
     expect(rows.length).toBe(0);
   });
 
+  it('has vertical separation larger than 1rem between category rows', () => {
+    render(categories);
+    const styles = Array.from(document.querySelectorAll('style'))
+      .map((s) => s.textContent ?? '')
+      .join('');
+    expect(styles).toMatch(/gap\s*:\s*2rem/);
+  });
+
   it('renders exactly three Tier 1 chips per category with the production config', () => {
     render(config.skillCategories);
     const rows = fixture.nativeElement.querySelectorAll('app-skills-category-row');

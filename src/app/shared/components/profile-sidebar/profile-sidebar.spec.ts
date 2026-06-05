@@ -28,6 +28,11 @@ describe('ProfileSidebarComponent', () => {
     expect(el.textContent?.trim()).toBe(config.hero.name);
   });
 
+  it('name is rendered as an h1', () => {
+    const el = fixture.nativeElement.querySelector('.sidebar-name') as HTMLElement;
+    expect(el.tagName.toLowerCase()).toBe('h1');
+  });
+
   it('name element precedes avatar in the DOM', () => {
     const name = fixture.nativeElement.querySelector('.sidebar-name') as HTMLElement;
     const avatar = fixture.nativeElement.querySelector('app-avatar') as HTMLElement;

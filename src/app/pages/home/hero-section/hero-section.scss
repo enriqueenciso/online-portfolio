@@ -1,3 +1,13 @@
 :host {
   display: block;
 }
+
+// Hero canvas is always #070714 regardless of theme; keep heading text
+// visible with hardcoded white rather than relying on the theme primary.
+h1 {
+  color: #fff;
+}
+
+p {
+  color: rgb(255 255 255 / 70%);
+}

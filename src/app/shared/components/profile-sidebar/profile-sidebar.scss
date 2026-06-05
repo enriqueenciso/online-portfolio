@@ -15,8 +15,10 @@
   grid-column: 1 / -1;
   grid-row: 1;
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--mat-sys-primary);
 }
 
 .sidebar-photo-col {
@@ -76,7 +78,7 @@
 
   .sidebar-name {
     text-align: center;
-    font-size: 1.25rem;
+    font-size: 1.6rem;
   }
 
   .sidebar-photo-col {
