@@ -1,0 +1,18 @@
+<button
+  mat-icon-button
+  [matTooltip]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+  [attr.aria-label]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+  (click)="theme.toggle()"
+>
+  <div class="morph-icon" aria-hidden="true">
+    <div class="circle"></div>
+    <span class="ray"></span>
+    <span class="ray"></span>
+    <span class="ray"></span>
+    <span class="ray"></span>
+    <span class="ray"></span>
+    <span class="ray"></span>
+    <span class="ray"></span>
+    <span class="ray"></span>
+  </div>
+</button>

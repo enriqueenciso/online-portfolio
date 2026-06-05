@@ -102,4 +102,9 @@ describe('HeaderComponent', () => {
     const aboutLink = Array.from(links).find((a) => a.textContent?.trim() === 'About');
     expect(aboutLink?.classList).toContain('nav-active');
   });
+
+  it('renders the theme-toggle-morph component', () => {
+    render();
+    expect(fixture.nativeElement.querySelector('app-theme-toggle-morph')).toBeTruthy();
+  });
 });

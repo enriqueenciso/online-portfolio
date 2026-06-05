@@ -3,9 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { ThemeService } from '../../core/services/theme.service';
+import { ThemeToggleMorphComponent } from '../../shared/components/theme-toggle-morph/theme-toggle-morph';
 
 @Component({
   selector: 'app-header',
@@ -14,14 +12,12 @@ import { ThemeService } from '../../core/services/theme.service';
     RouterLinkActive,
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
+    ThemeToggleMorphComponent,
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class HeaderComponent {
-  readonly theme = inject(ThemeService);
   private readonly platformId = inject(PLATFORM_ID);
   protected readonly isVisible = signal(false);
 

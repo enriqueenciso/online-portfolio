@@ -13,13 +13,6 @@
   <nav class="flex items-center gap-2">
     <a mat-button [routerLink]="'/'" [fragment]="'about'" routerLinkActive="nav-active">About</a>
 
-    <button
-      mat-icon-button
-      [matTooltip]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
-      (click)="theme.toggle()"
-      aria-label="Toggle theme"
-    >
-      <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
-    </button>
+    <app-theme-toggle-morph />
   </nav>
 </mat-toolbar>

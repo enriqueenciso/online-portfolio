@@ -1,0 +1,115 @@
+:host {
+  display: inline-flex;
+}
+
+.morph-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  color: inherit;
+}
+
+.circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--mat-sys-surface);
+    top: -2px;
+    right: -4px;
+    transform: scale(0);
+    transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
+
+.ray {
+  position: absolute;
+  width: 2px;
+  height: 5px;
+  border-radius: 1px;
+  background: currentColor;
+  left: calc(50% - 1px);
+  bottom: calc(50% + 7px);
+  transform-origin: 1px 100%;
+  opacity: 1;
+  transition:
+    transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 0.35s ease;
+
+  &:nth-of-type(1) {
+    transform: rotate(0deg);
+  }
+  &:nth-of-type(2) {
+    transform: rotate(45deg);
+  }
+  &:nth-of-type(3) {
+    transform: rotate(90deg);
+  }
+  &:nth-of-type(4) {
+    transform: rotate(135deg);
+  }
+  &:nth-of-type(5) {
+    transform: rotate(180deg);
+  }
+  &:nth-of-type(6) {
+    transform: rotate(225deg);
+  }
+  &:nth-of-type(7) {
+    transform: rotate(270deg);
+  }
+  &:nth-of-type(8) {
+    transform: rotate(315deg);
+  }
+}
+
+// Moon state — triggered by .dark on <body> via ThemeService
+:host-context(body.dark) {
+  .circle {
+    transform: translate(-50%, -50%) scale(1.45);
+
+    &::before {
+      transform: scale(1);
+    }
+  }
+
+  .ray {
+    opacity: 0;
+
+    &:nth-of-type(1) {
+      transform: rotate(0deg) scaleY(0.4);
+    }
+    &:nth-of-type(2) {
+      transform: rotate(45deg) scaleY(0.4);
+    }
+    &:nth-of-type(3) {
+      transform: rotate(90deg) scaleY(0.4);
+    }
+    &:nth-of-type(4) {
+      transform: rotate(135deg) scaleY(0.4);
+    }
+    &:nth-of-type(5) {
+      transform: rotate(180deg) scaleY(0.4);
+    }
+    &:nth-of-type(6) {
+      transform: rotate(225deg) scaleY(0.4);
+    }
+    &:nth-of-type(7) {
+      transform: rotate(270deg) scaleY(0.4);
+    }
+    &:nth-of-type(8) {
+      transform: rotate(315deg) scaleY(0.4);
+    }
+  }
+}
