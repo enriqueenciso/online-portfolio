@@ -31,6 +31,13 @@ describe('EducationSectionComponent', () => {
     }).compileComponents();
   });
 
+  it('renders "Education" heading', () => {
+    render(education, []);
+    const h2 = fixture.nativeElement.querySelector('h2') as HTMLElement;
+    expect(h2).not.toBeNull();
+    expect(h2.textContent?.trim()).toBe('Education');
+  });
+
   it('renders institution, degree, and date range', () => {
     render(education, []);
     const text = fixture.nativeElement.textContent as string;
