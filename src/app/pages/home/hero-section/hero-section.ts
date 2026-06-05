@@ -3,6 +3,7 @@ import type { AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
 import { Component, PLATFORM_ID, ViewChild, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { DevicePerformanceService } from '../../../core/services/device-performance.service';
+import { SkillsTickerComponent } from '../../../shared/components/skills-ticker/skills-ticker';
 import { HeroCanvasComponent } from '../hero-canvas/hero-canvas';
 import type { TechIcon } from '../tech-stack.config';
 import { config } from '../../../../portfolio.config';
@@ -12,7 +13,7 @@ const TYPED_STRINGS = ['Frontend Engineer', 'Angular Specialist', 'Team Lead'];
 @Component({
   selector: 'app-hero-section',
   standalone: true,
-  imports: [MatButtonModule, HeroCanvasComponent],
+  imports: [MatButtonModule, HeroCanvasComponent, SkillsTickerComponent],
   templateUrl: './hero-section.html',
   styleUrl: './hero-section.scss',
 })

@@ -7,6 +7,9 @@
     <p class="text-xl text-white/70">
       <span #titleEl>{{ title }}</span>
     </p>
-    <button #ctaEl mat-flat-button class="mt-2" (click)="scrollToAbout()">See my work ↓</button>
+    <app-skills-ticker />
+    <button #ctaEl mat-flat-button style="margin-top: 2rem" (click)="scrollToAbout()">
+      See my work ↓
+    </button>
   </div>
 </section>

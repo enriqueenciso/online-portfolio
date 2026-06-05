@@ -1,0 +1,22 @@
+@if (prefersReducedMotion()) {
+  <div class="ticker-static" aria-label="Skills">
+    @for (skill of staticSkills; track skill) {
+      <span class="ticker-chip">{{ skill }}</span>
+    }
+  </div>
+} @else {
+  <div class="ticker-wrapper">
+    <div class="ticker-track">
+      <div class="ticker-inner" role="list" aria-label="Skills">
+        @for (skill of allSkills; track skill) {
+          <span class="ticker-chip" role="listitem">{{ skill }}</span>
+        }
+      </div>
+      <div class="ticker-inner" aria-hidden="true">
+        @for (skill of allSkills; track $index) {
+          <span class="ticker-chip">{{ skill }}</span>
+        }
+      </div>
+    </div>
+  </div>
+}
