@@ -58,8 +58,10 @@ export const config: PortfolioConfig = {
   skillCategories: [
     {
       name: 'Frontend',
-      tier1: ['Angular', 'TypeScript', 'React', 'RxJS/NgRx', 'SCSS'],
+      tier1: ['Angular', 'TypeScript', 'React'],
       tier2: [
+        'RxJS/NgRx',
+        'SCSS',
         'JavaScript',
         'HTML5',
         'Tailwind',
@@ -71,19 +73,21 @@ export const config: PortfolioConfig = {
     },
     {
       name: 'AI & Workflows',
-      tier1: ['Cursor', 'LLMs', 'AI-assisted dev', 'GitHub Copilot'],
-      tier2: [],
+      tier1: ['Claude Code', 'Cursor', 'GitHub Copilot'],
+      tier2: ['LLMs', 'AI-assisted dev'],
     },
     {
       name: 'Backend & Data',
-      tier1: ['Node.js', 'NestJS', 'PostgreSQL', 'Docker', 'Zod'],
+      tier1: ['Java', 'Node.js', 'NestJS'],
       tier2: [
+        'PostgreSQL',
+        'Docker',
+        'Zod',
         'GraphQL',
         'MongoDB',
         'Redis',
         'MySQL',
         'SQL Server',
-        'Java',
         'Spring Boot',
         'Express.js',
         'Maven',
@@ -91,8 +95,8 @@ export const config: PortfolioConfig = {
     },
     {
       name: 'DevOps & Tooling',
-      tier1: ['Git', 'GitHub Actions', 'Azure', 'AWS', 'Vercel'],
-      tier2: ['Jenkins', 'Webpack', 'Vite', 'Figma', 'Jira'],
+      tier1: ['Git', 'Azure', 'AWS'],
+      tier2: ['GitHub Actions', 'Vercel', 'Jenkins', 'Webpack', 'Vite', 'Figma', 'Jira'],
     },
     {
       name: 'Testing & QA',

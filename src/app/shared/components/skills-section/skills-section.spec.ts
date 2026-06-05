@@ -1,6 +1,6 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-import type { SkillCategory } from '../../../../portfolio.config';
+import { config, type SkillCategory } from '../../../../portfolio.config';
 import { SkillsSectionComponent } from './skills-section';
 
 const categories: SkillCategory[] = [
@@ -34,5 +34,14 @@ describe('SkillsSectionComponent', () => {
     render([]);
     const rows = fixture.nativeElement.querySelectorAll('app-skills-category-row');
     expect(rows.length).toBe(0);
+  });
+
+  it('renders exactly three Tier 1 chips per category with the production config', () => {
+    render(config.skillCategories);
+    const rows = fixture.nativeElement.querySelectorAll('app-skills-category-row');
+    for (const row of rows) {
+      const tier1Chips = row.querySelectorAll('mat-chip-set.tier1 mat-chip');
+      expect(tier1Chips.length).toBe(3);
+    }
   });
 });
