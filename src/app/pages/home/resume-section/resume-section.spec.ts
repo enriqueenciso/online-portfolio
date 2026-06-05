@@ -37,9 +37,9 @@ describe('ResumeSectionComponent', () => {
     expect(fixture.nativeElement.querySelector('app-education-section')).not.toBeNull();
   });
 
-  it('renders SkillsSectionComponent', () => {
+  it('does not render SkillsSectionComponent in the main column', () => {
     render();
-    expect(fixture.nativeElement.querySelector('app-skills-section')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('.main-col app-skills-section')).toBeNull();
   });
 
   it('renders title from config via sidebar', () => {
