@@ -110,7 +110,7 @@ html {
 
   // Universal pill shape for all Material chips; applied once so all mat-chip
   // instances (skills, tech-stack) inherit it without per-component overrides.
-  --mdc-chip-container-shape: 9999px;
+  --mat-chip-container-shape-radius: 9999px;
 
   // Light theme (default)
   @include mat.theme(
