@@ -37,12 +37,15 @@
 .ray {
   position: absolute;
   width: 2px;
-  height: 5px;
+  height: 4px;
   border-radius: 1px;
   background: currentColor;
   left: calc(50% - 1px);
-  bottom: calc(50% + 7px);
-  transform-origin: 1px 100%;
+  // Ray bottom sits 8px above icon center; top sits 12px above center (y=0).
+  // transform-origin Y = distance from ray's top to icon center = 12px,
+  // placing the rotation pivot exactly at the icon center for all 8 rays.
+  bottom: calc(50% + 8px);
+  transform-origin: 1px 12px;
   opacity: 1;
   transition:
     transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
