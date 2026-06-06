@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 
 export interface ProfileLinksData {
   email?: string;
@@ -8,7 +9,7 @@ export interface ProfileLinksData {
 
 @Component({
   selector: 'app-profile-links',
-  imports: [],
+  imports: [MatButtonModule],
   templateUrl: './profile-links.html',
   styleUrl: './profile-links.scss',
 })

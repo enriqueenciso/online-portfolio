@@ -28,31 +28,28 @@ describe('ProfileLinksComponent', () => {
     expect(anchors.length).toBe(3);
   });
 
-  it('email badge has mailto href and "Email" label', () => {
+  it('email badge has mailto href and descriptive aria-label', () => {
     render({ email: 'test@example.com' });
     const a: HTMLAnchorElement = fixture.nativeElement.querySelector('.badge--email');
     expect(a).toBeTruthy();
     expect(a.href).toContain('mailto:test@example.com');
-    const label = a.querySelector<HTMLElement>('.badge-label');
-    expect(label?.textContent?.trim()).toBe('Email');
+    expect(a.getAttribute('aria-label')).toContain('test@example.com');
   });
 
-  it('github badge has correct href and "GitHub" label', () => {
+  it('github badge has correct href and descriptive aria-label', () => {
     render({ github: 'https://github.com/test' });
     const a: HTMLAnchorElement = fixture.nativeElement.querySelector('.badge--github');
     expect(a).toBeTruthy();
     expect(a.href).toBe('https://github.com/test');
-    const label = a.querySelector<HTMLElement>('.badge-label');
-    expect(label?.textContent?.trim()).toBe('GitHub');
+    expect(a.getAttribute('aria-label')).toBeTruthy();
   });
 
-  it('linkedin badge has correct href and "LinkedIn" label', () => {
+  it('linkedin badge has correct href and descriptive aria-label', () => {
     render({ linkedin: 'https://linkedin.com/in/test' });
     const a: HTMLAnchorElement = fixture.nativeElement.querySelector('.badge--linkedin');
     expect(a).toBeTruthy();
     expect(a.href).toBe('https://linkedin.com/in/test');
-    const label = a.querySelector<HTMLElement>('.badge-label');
-    expect(label?.textContent?.trim()).toBe('LinkedIn');
+    expect(a.getAttribute('aria-label')).toBeTruthy();
   });
 
   it('renders only provided badges when some links are omitted', () => {

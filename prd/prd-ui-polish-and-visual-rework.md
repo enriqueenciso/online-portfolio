@@ -158,6 +158,40 @@ Good tests verify external behavior observable in the DOM — rendered structure
 - NestJS (Backend & Data) and Next.js (Frontend tier2) are different technologies and live in different categories. No move is needed for Next.js.
 - Demoted Tier 1 items should be prepended to `tier2` arrays, not appended, so they remain the most visible items after the expand toggle.
 
-## Chosen Direction (to be filled after prototype)
+## Chosen Direction
 
-_This section is intentionally blank. Once a color direction is selected during the prototype phase, document here: the chosen hue assignments, token strategy, rationale, and any layout changes introduced._
+**Direction A — Category hues** (committed in feat(skills-color): direction A multi-hue system).
+
+### Hue assignments
+
+| Category | Hue | Key |
+|---|---|---|
+| Frontend | Blue 208° | `frontend` |
+| AI & Workflows | Violet 265° | `ai` |
+| Backend & Data | Emerald 152° | `backend` |
+| DevOps & Tooling | Amber 38° | `devops` |
+| Testing & QA | Rose 345° | `testing` |
+
+### Token strategy
+
+Three CSS custom properties per category, defined once in `styles.scss` on `html` (light mode) with overrides under `body.dark &` (dark mode):
+
+- `--skill-{key}-chip-bg` — chip container tint
+- `--skill-{key}-chip-fg` — chip label text
+- `--skill-{key}-accent` — category heading and toggle-button color
+
+These cascade via the `[style]` host binding on `SkillsCategoryRowComponent`, which computes a `hostStyles` object keyed off `category().colorKey`. The MDC tokens `--mdc-chip-elevated-container-color` / `--mdc-chip-label-text-color` (and their Angular Material counterparts) are set on the host element and inherited by all `mat-chip` instances inside the row.
+
+`colorKey?: 'frontend' | 'ai' | 'backend' | 'devops' | 'testing'` added to `SkillCategory` interface (optional — categories without a key fall back to the neutral Material theme defaults).
+
+### Rationale
+
+- **Direction A over Direction B**: Skill categories are the primary scannable element on the sidebar; colored chip rows immediately signal "these are different domains." Direction B (timeline role badges) would require new template elements and a role-type tagging scheme — a larger structural change with less visual payoff for a sidebar-focused layout.
+- **CSS custom properties over full AM3 tonal palettes**: Five full palettes × 20 tones each would be ~300 lines of Sass data. Three tonal stops per category (bg/fg/accent) cover all actual use cases at ~30 lines, and the token names are self-documenting.
+- **No new library dependency**: daisyUI would add a parallel color alias system alongside AM3; Bootstrap and PrimeNG add large footprints for a handful of color tokens. The existing `styles.scss` / CSS custom property system is sufficient.
+- **WCAG AA compliance**: Light-mode pairs use tonal 90–93% backgrounds with tonal 18–22% foregrounds (contrast ≈ 10–13:1). Dark-mode pairs use tonal 18–22% backgrounds with tonal 78–82% foregrounds (contrast ≈ 5–7:1). Both pass WCAG AA (4.5:1) for normal-sized chip labels.
+
+### Deferred
+
+- Timeline tech-stack chips using matching category color: requires a tech-to-colorKey mapping (or a `colorKey` field on `TimelineEntry.techStack` items); deferred to a follow-up issue.
+- Visual regression tests (Playwright screenshot comparison): deferred per the testing decision in this PRD.

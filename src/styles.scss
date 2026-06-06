@@ -111,6 +111,9 @@ html {
   // Universal pill shape for all Material chips; applied once so all mat-chip
   // instances (skills, tech-stack) inherit it without per-component overrides.
   --mat-chip-container-shape-radius: 9999px;
+  // No border — gives chips a tonal/filled look rather than the M3 suggestion-chip
+  // outlined default.
+  --mdc-chip-outline-width: 0;
 
   // Light theme (default)
   @include mat.theme(
@@ -121,6 +124,19 @@ html {
       ),
       typography: Roboto,
       density: 0,
+    )
+  );
+
+  // Chips: faded primary tint derived from existing tokens.
+  // color-mix ratio is the only owned value; colors auto-adapt with dark mode.
+  @include mat.chips-overrides(
+    (
+      elevated-container-color: color-mix(
+          in hsl,
+          var(--mat-sys-primary-container) 35%,
+          var(--mat-sys-surface)
+        ),
+      label-text-color: var(--mat-sys-on-surface-variant),
     )
   );
 

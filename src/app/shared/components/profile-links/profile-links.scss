@@ -4,7 +4,8 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  align-items: flex-start;
+  gap: 0.75rem;
 }
 
 @media (min-width: 768px) {
@@ -15,29 +16,9 @@
   }
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.375rem 0.875rem;
-  border-radius: 9999px;
-  border: 1px solid var(--mat-sys-primary);
-  text-decoration: none;
-  color: var(--mat-sys-primary);
-  font-size: 0.875rem;
-  line-height: 1.25;
-  transition:
-    background-color 200ms ease,
-    color 200ms ease;
-
-  svg {
-    width: 1rem;
-    height: 1rem;
-    flex-shrink: 0;
-    fill: currentColor;
-  }
-
-  &:hover {
-    background-color: color-mix(in srgb, var(--mat-sys-primary) 15%, transparent);
-  }
+// Extended FABs expect Material icons at 24px; our custom SVGs need to match.
+.links a svg {
+  display: block;
+  width: 24px;
+  height: 24px;
 }
